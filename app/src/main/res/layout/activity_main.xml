@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.MainActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/mViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/mBottomNav" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/mBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconSize="@dimen/_18sdp"
+        app:itemIconTint="@color/color_icon_select_bot_nav"
+        app:itemTextAppearanceActive="@style/navTextActive"
+        app:itemTextAppearanceInactive="@style/navTextInactive"
+        app:itemTextColor="@color/color_item_select_bot_nav"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/nav_menu" />
+
+</RelativeLayout>

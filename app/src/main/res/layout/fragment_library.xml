@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:context=".ui.fragment.library.LibraryFragment">
+
+    <RelativeLayout
+        android:id="@+id/mSongs"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_140sdp"
+        android:background="@color/purple_200"
+        android:clickable="true"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/mImgSong"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mTVSong"
+            android:clickable="false"
+            android:src="@drawable/ic_home" />
+
+        <TextView
+            android:id="@+id/mTVSong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="Bài hát"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mPlaylist"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_140sdp"
+        android:layout_below="@id/mSongs"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/purple_200"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/mImgPlayList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mTVPlaylist"
+            android:src="@drawable/ic_home" />
+
+        <TextView
+            android:id="@+id/mTVPlaylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="Playlist"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mAlbum"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_140sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_toEndOf="@id/mSongs"
+        android:background="@color/purple_200"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/mImgAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mTVAlbum"
+            android:src="@drawable/ic_home" />
+
+        <TextView
+            android:id="@+id/mTVAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="Album"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mFavourite"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_140sdp"
+        android:layout_below="@id/mAlbum"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_toEndOf="@id/mPlaylist"
+        android:background="@color/purple_200"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/mImgFavourite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mTVFavourite"
+            android:src="@drawable/ic_home" />
+
+        <TextView
+            android:id="@+id/mTVFavourite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="Yêu thích"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</RelativeLayout>

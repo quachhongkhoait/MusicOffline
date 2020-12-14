@@ -30,6 +30,12 @@ public class BaseLibraryFragment extends Fragment {
     private OnCurrentFragmentListener mListener;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_base, container, false);
@@ -58,13 +64,6 @@ public class BaseLibraryFragment extends Fragment {
             mListener = (OnCurrentFragmentListener) context;
         } catch (ClassCastException e) {
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-        Log.d("nnn", "onStart: ");
     }
 
     @Override

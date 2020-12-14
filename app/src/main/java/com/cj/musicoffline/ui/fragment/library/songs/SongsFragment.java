@@ -3,6 +3,7 @@ package com.cj.musicoffline.ui.fragment.library.songs;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -27,7 +28,12 @@ import android.widget.Toast;
 
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.model.AudioModel;
+import com.cj.musicoffline.service.PlayMusicService;
 import com.cj.musicoffline.ui.main.MainActivity;
+import com.cj.musicoffline.ui.playmusic.PlayActivity;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -122,6 +128,20 @@ public class SongsFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new AdapterAudio(getActivity(), arrayList);
         mRecyclerView.setAdapter(adapter);
+        adapter.setOnClickItemMusicListener(position -> {
+            //start activity
+            Intent mIntent = new Intent(getActivity(), PlayActivity.class);
+            mIntent.putExtra("postion", position);
+            mIntent.putExtra("audio", arrayList.get(position));
+            startActivity(mIntent);
+            //start service
+            Gson gson = new Gson();
+            String json = gson.toJson(arrayList);
+            Intent intent = new Intent(getActivity(), PlayMusicService.class);
+            intent.putExtra("list", json);
+            intent.putExtra("postion", position);
+            ContextCompat.startForegroundService(getActivity(), intent);
+        });
     }
 
 }

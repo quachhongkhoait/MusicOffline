@@ -72,9 +72,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager = findViewById(R.id.mViewPager);
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         //
+        String title = "";
+//        title = mAudioModel.getTitle();
+        String image = "";
+//        image = mAudioModel.getIdAlbum();
         Bundle bundle = new Bundle();
-        bundle.putString("title", mAudioModel.getTitle());
-        bundle.putString("image", mAudioModel.getIdAlbum());
+        bundle.putString("title", title);
+        bundle.putString("image", image);
         InfoFragment infoFragment = new InfoFragment();
         infoFragment.setArguments(bundle);
         mAdapter.addData(infoFragment);

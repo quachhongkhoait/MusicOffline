@@ -66,6 +66,8 @@ public class CreateNotification {
                 intentClose, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent notificationIntent = new Intent(context, PlayActivity.class);
+//        notificationIntent.putExtra("postion", postion);
+//        notificationIntent.putExtra("audio", mList.get(postion));
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 

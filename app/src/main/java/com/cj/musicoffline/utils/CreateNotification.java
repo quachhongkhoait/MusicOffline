@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -16,13 +17,16 @@ import com.cj.musicoffline.broadcast.NotificationActionService;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.ui.main.MainActivity;
 import com.cj.musicoffline.ui.playmusic.PlayActivity;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 public class CreateNotification {
     public static Notification notification;
 
-    public static void createNotification(Context context, AudioModel audioModel, int playbutton, int postion, List<AudioModel> mList) {
+    public static void createNotification(Context context, int playbutton, int postion, List<AudioModel> mList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(mList);
 
         Bitmap icon = BitmapFactory.decodeFile(HandlingMusic.getCoverArtPath(Long.parseLong(mList.get(postion).getIdAlbum()), context));
         if (icon == null) {
@@ -66,16 +70,18 @@ public class CreateNotification {
                 intentClose, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent notificationIntent = new Intent(context, PlayActivity.class);
-//        notificationIntent.putExtra("postion", postion);
-//        notificationIntent.putExtra("audio", mList.get(postion));
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        notificationIntent.putExtra("postion", postion);
+        notificationIntent.putExtra("list", json);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
         RemoteViews notificationLayout =
                 new RemoteViews(context.getPackageName(), R.layout.notification_push);
 
-        notificationLayout.setTextViewText(R.id.mTvTitle, audioModel.getTitle());
-        notificationLayout.setTextViewText(R.id.mTvDurection, HandlingMusic.createTimerLabel(Integer.parseInt(audioModel.getDuration())));
+        notificationLayout.setTextViewText(R.id.mTvTitle, mList.get(postion).getTitle());
+        notificationLayout.setTextViewText(R.id.mTvDurection,
+                HandlingMusic.createTimerLabel(Integer.parseInt(mList.get(postion).getDuration())));
         notificationLayout.setImageViewBitmap(R.id.mIVAlbum, icon);
 
         notificationLayout.setImageViewResource(R.id.mPrevious, drw_previous);
@@ -88,12 +94,12 @@ public class CreateNotification {
         notificationLayout.setOnClickPendingIntent(R.id.mClose, pendingIntentClose);
 
         notification = new NotificationCompat.Builder(context, App.CHANNEL_ID)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_music_note)
                 .setLargeIcon(icon)
-                .setCustomContentView(notificationLayout)
+//                .setCustomContentView(notificationLayout)
                 .setCustomBigContentView(notificationLayout)
                 .setContentIntent(pendingIntent)
                 .build();
+//        Log.d("nnn", "createNotification");
     }
 }

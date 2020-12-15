@@ -1,9 +1,13 @@
 package com.cj.musicoffline.ui.playmusic;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cj.musicoffline.R;
+import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.SendService;
 import com.cj.musicoffline.eventbuss.SendUI;
@@ -25,29 +30,42 @@ import com.cj.musicoffline.ui.playmusic.fragment.InfoFragment;
 import com.cj.musicoffline.ui.playmusic.fragment.LyricsFragment;
 import com.cj.musicoffline.utils.HandlingMusic;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayActivity extends AppCompatActivity implements View.OnClickListener {
+    public static ArrayList<AudioModel> mList = new ArrayList<>();
     private ViewPagerAdapter mAdapter;
     private ViewPager mViewPager;
     private ImageView mIVBack, mIVAlarm;
     private TextView mTVPrevious, mTVPause, mTVNext, mTVTotalTime, mTVCurrentTime;
     private SeekBar mSeekBar;
     private Handler mHandler = new Handler();
-    private AudioModel mAudioModel;
+    public static int position;
+    public static boolean isPlayingUI = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         setContentView(R.layout.activity_play);
-        mAudioModel = getIntent().getParcelableExtra("audio");
+        String json = getIntent().getStringExtra("list");
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<AudioModel>>() {
+        }.getType();
+        mList = gson.fromJson(json, type);
+        position = getIntent().getIntExtra("postion", 0);
         setUp();
         onClick();
-        addData(mAudioModel);
+        addData(mList.get(position));
     }
 
     private void onClick() {
@@ -73,9 +91,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         //
         String title = "";
-//        title = mAudioModel.getTitle();
+        title = mList.get(position).getTitle();
         String image = "";
-//        image = mAudioModel.getIdAlbum();
+        image = mList.get(position).getIdAlbum();
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("image", image);
@@ -91,14 +109,24 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUI(SendUI sendUI) {
-        if (sendUI.getAudioModel() != null) {
-            addData(sendUI.getAudioModel());
+        if (isStringInt(sendUI.getAction())) {
+            addData(mList.get(sendUI.getPosition()));
+            changStart("play");
         } else {
-            if (sendUI.getAction().equals("pause")) {
-                mTVPause.setBackgroundResource(R.drawable.ic_play_while);
+            if (sendUI.getAction().equals("close")) {
+                isPlayingUI = false;
+                changStart("pause");
             } else {
-                mTVPause.setBackgroundResource(R.drawable.ic_pause_while);
+                changStart(sendUI.getAction());
             }
+        }
+    }
+
+    private void changStart(String s) {
+        if (s.equals("pause")) {
+            mTVPause.setBackgroundResource(R.drawable.ic_play_while);
+        } else {
+            mTVPause.setBackgroundResource(R.drawable.ic_pause_while);
         }
     }
 
@@ -151,13 +179,19 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.mTVPrevious:
                 action = "previous";
+                changStart("play");
                 break;
             case R.id.mTVPause:
-                if (PlayMusicService.isPlaying) action = "pause";
-                else action = "play";
+                isPlayingUI = PlayMusicService.isPlaying;
+                if (isPlayingUI) {
+                    action = "pause";
+                } else {
+                    action = "play";
+                }
                 break;
             case R.id.mTVNext:
                 action = "next";
+                changStart("play");
                 break;
             case R.id.mIVAlarm:
                 Toast.makeText(this, "Thiết lập tắt", Toast.LENGTH_SHORT).show();
@@ -167,11 +201,58 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
         }
-        if (!action.equals("")) {
-            EventBus.getDefault().post(new SendService(action));
+        sendService(action);
+    }
+
+    private void sendService(String action) {
+
+        if (!isMyServiceRunning(PlayMusicService.class)) {
+            Log.d("nnn", "sendService: " + position);
+            if (action.equals("previous")) {
+                position -= 1;
+                addData(mList.get(position));
+                EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
+            } else if (action.equals("next")) {
+                position += 1;
+                addData(mList.get(position));
+                EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
+            } else if (action.equals("play")) {
+                updateUI(new SendUI(0, "play"));
+            } else {
+                updateUI(new SendUI(0, "pause"));
+            }
+            Gson gson = new Gson();
+            String json = gson.toJson(mList);
+            Intent intent = new Intent(this, PlayMusicService.class);
+            intent.putExtra("list", json);
+            intent.putExtra("postion", position);
+            ContextCompat.startForegroundService(this, intent);
+
+        } else {
+            if (!action.equals("")) {
+                EventBus.getDefault().post(new SendService(action));
+            }
         }
     }
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isStringInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 
     @Override
     protected void onDestroy() {

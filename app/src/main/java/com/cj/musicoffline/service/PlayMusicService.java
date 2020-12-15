@@ -15,6 +15,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.cj.musicoffline.R;
+import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.SendService;
 import com.cj.musicoffline.eventbuss.SendUI;
@@ -67,6 +68,7 @@ public class PlayMusicService extends Service implements Playable {
     }
 
     private void playAudio(int pos) {
+        position = pos;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
@@ -76,15 +78,14 @@ public class PlayMusicService extends Service implements Playable {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                if (position >= (mList.size() - 1)) {
+                if (pos >= (mList.size() - 1)) {
                     mediaPlayer.stop();
                 } else {
                     onMusicNext();
                 }
             }
         });
-        CreateNotification.createNotification(this, mList.get(position),
-                R.drawable.ic_pause, position, mList);
+        CreateNotification.createNotification(this, R.drawable.ic_pause, pos, mList);
         startForeground(1, CreateNotification.notification);
     }
 
@@ -114,6 +115,7 @@ public class PlayMusicService extends Service implements Playable {
                     onMusicNext();
                     break;
                 case "ACTION_CLOSE":
+                    EventBus.getDefault().post(new SendUI(0, "close"));
                     stopSelf();
                     mediaPlayer.stop();
                     break;
@@ -128,32 +130,32 @@ public class PlayMusicService extends Service implements Playable {
         } else {
             position = mList.size() - 1;
         }
-        CreateNotification.createNotification(this, mList.get(position),
+        CreateNotification.createNotification(this,
                 R.drawable.ic_pause, position, mList);
         startForeground(1, CreateNotification.notification);
         playAudio(position);
-        EventBus.getDefault().post(new SendUI(mList.get(position)));
+        EventBus.getDefault().post(new SendUI(position, "play"));
         EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
     }
 
     @Override
     public void onMusicPlay() {
-        CreateNotification.createNotification(this, mList.get(position),
+        CreateNotification.createNotification(this,
                 R.drawable.ic_pause, position, mList);
         startForeground(1, CreateNotification.notification);
         isPlaying = true;
         mediaPlayer.start();
-        EventBus.getDefault().post(new SendUI("play"));
+        EventBus.getDefault().post(new SendUI(0, "play"));
     }
 
     @Override
     public void onMusicPause() {
-        CreateNotification.createNotification(this, mList.get(position),
+        CreateNotification.createNotification(this,
                 R.drawable.ic_play_arrow, position, mList);
         startForeground(1, CreateNotification.notification);
         isPlaying = false;
         mediaPlayer.pause();
-        EventBus.getDefault().post(new SendUI("pause"));
+        EventBus.getDefault().post(new SendUI(0, "pause"));
     }
 
     @Override
@@ -163,11 +165,11 @@ public class PlayMusicService extends Service implements Playable {
         } else {
             position = 0;
         }
-        CreateNotification.createNotification(this, mList.get(position),
+        CreateNotification.createNotification(this,
                 R.drawable.ic_pause, position, mList);
         startForeground(1, CreateNotification.notification);
         playAudio(position);
-        EventBus.getDefault().post(new SendUI(mList.get(position)));
+        EventBus.getDefault().post(new SendUI(position, "play"));
         EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
     }
 
@@ -184,9 +186,16 @@ public class PlayMusicService extends Service implements Playable {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void PlayAudio(PlayAudio audio) {
+        mediaPlayer.stop();
+        playAudio(audio.getPosition());
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        unregisterReceiver(broadcastReceiver);
     }
 }

@@ -6,9 +6,43 @@
     tools:context=".ui.fragment.library.album.AlbumFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient">
+        <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/linnertoolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp">
+                <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#00000000">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_back"/>
+                    <TextView
+                            android:textSize="24sp"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Album"/>
+                </androidx.appcompat.widget.Toolbar>
+            </LinearLayout>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#807B7B"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

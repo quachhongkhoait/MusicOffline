@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.library.favourite.FavouriteFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.fragment.library.favourite.FavouriteFragment">
 
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient">
+
+        <LinearLayout
+                android:id="@+id/linnertoolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp"
+                    android:orientation="horizontal">
+
+                <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#00000000">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_back" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:drawableRight="@drawable/ic_point"
+                            android:text="Yêu Thích"
+                            android:paddingRight="18dp"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp"/>
+                </androidx.appcompat.widget.Toolbar>
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+                android:id="@+id/btn_Favourite"
+                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="#00ff38"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_below="@id/linnertoolbar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                >
+            <TextView
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="PHÁT NGẪU NHIÊN" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </FrameLayout>

@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.library.playlist.PlayListFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.fragment.library.playlist.PlayListFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient">
+        <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/linnertoolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+           <LinearLayout
+                   android:orientation="horizontal"
+                   android:layout_width="match_parent"
+                   android:layout_height="59dp">
+               <androidx.appcompat.widget.Toolbar
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:background="#00000000">
+
+                   <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/ic_back"/>
+                   <TextView
+                           android:textSize="24sp"
+                           android:textColor="#FFFFFF"
+                           android:gravity="center"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:text="Playlist"/>
+               </androidx.appcompat.widget.Toolbar>
+           </LinearLayout>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#807B7B"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

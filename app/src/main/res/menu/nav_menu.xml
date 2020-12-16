@@ -3,16 +3,16 @@
     <item
         android:id="@+id/menu_home"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/account_balance_24px"
         android:title="Trang chủ" />
     <item
         android:id="@+id/menu_search"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/icon_search"
         android:title="Tìm kiếm" />
     <item
         android:id="@+id/menu_library"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/icon_libary"
         android:title="Thư viện" />
 </menu>

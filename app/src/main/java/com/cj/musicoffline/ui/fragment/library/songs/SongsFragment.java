@@ -33,8 +33,10 @@ import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.eventbuss.SendUI;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.service.PlayMusicService;
+import com.cj.musicoffline.ui.fragment.library.dialog.ShowBottomSheetDialog;
 import com.cj.musicoffline.ui.main.MainActivity;
 import com.cj.musicoffline.ui.playmusic.PlayActivity;
+import com.cj.musicoffline.utils.Constain;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,6 +55,7 @@ public class SongsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Toast.makeText(getActivity(), "Bài Hát", Toast.LENGTH_SHORT).show();
         return inflater.inflate(R.layout.fragment_songs, container, false);
     }
 
@@ -130,7 +133,7 @@ public class SongsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new AdapterAudio(getActivity(), arrayList);
+        adapter = new AdapterAudio(getActivity(), arrayList,SongsFragment.this);
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickItemMusicListener(position -> {
             Gson gson = new Gson();
@@ -161,5 +164,12 @@ public class SongsFragment extends Fragment {
         }
         return false;
     }
-
+    public void showBottomSheetDialog() {
+        ShowBottomSheetDialog showBottomSheetDialog = new ShowBottomSheetDialog();
+        showBottomSheetDialog.show(getFragmentManager(), Constain.keyBottomSheet);
+        Fragment fragment = getFragmentManager().findFragmentByTag(Constain.keyBottomSheet);
+        if(fragment != null){
+//            getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+    }
 }

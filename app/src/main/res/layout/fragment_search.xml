@@ -21,11 +21,11 @@
 
                 <androidx.appcompat.widget.SearchView
                         android:id="@+id/searchViewItem"
-                        android:padding="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:background="@drawable/border_search"
                         android:backgroundTint="@color/white"
+                        android:padding="5dp"
                         app:queryHint="Tìm bài hát, playlist ..." />
             </androidx.appcompat.widget.Toolbar>
         </LinearLayout>

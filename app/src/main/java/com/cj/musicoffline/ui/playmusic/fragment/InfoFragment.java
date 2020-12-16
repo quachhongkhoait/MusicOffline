@@ -47,7 +47,9 @@ public class InfoFragment extends Fragment {
         if (getArguments() != null) {
             String title = getArguments().getString("title");
             String image = getArguments().getString("image");
-            updateInfo(new SendInfo(title, image));
+            if (!title.equals("")){
+                updateInfo(new SendInfo(title, image));
+            }
         }
     }
 
@@ -58,13 +60,14 @@ public class InfoFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateInfo(SendInfo sendInfo) {
-        Log.d("nnn", "updateInfo: ");
-        mTvTitle.setText(sendInfo.getTitle());
-        Bitmap bitmap = BitmapFactory.decodeFile(HandlingMusic.getCoverArtPath(Long.parseLong(sendInfo.getImage()), getContext()));
-        if (bitmap == null) {
-            mImgAlbum.setImageResource(R.drawable.bg_musicerror);
-        } else {
-            mImgAlbum.setImageBitmap(bitmap);
+        if (sendInfo != null) {
+            mTvTitle.setText(sendInfo.getTitle());
+            Bitmap bitmap = BitmapFactory.decodeFile(HandlingMusic.getCoverArtPath(Long.parseLong(sendInfo.getImage()), getContext()));
+            if (bitmap == null) {
+                mImgAlbum.setImageResource(R.drawable.bg_musicerror);
+            } else {
+                mImgAlbum.setImageBitmap(bitmap);
+            }
         }
     }
 

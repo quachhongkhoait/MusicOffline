@@ -1,8 +1,10 @@
 package com.cj.musicoffline.ui.fragment.library.songs;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -27,6 +29,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cj.musicoffline.R;
+import com.cj.musicoffline.eventbuss.PlayAudio;
+import com.cj.musicoffline.eventbuss.SendUI;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.service.PlayMusicService;
 import com.cj.musicoffline.ui.main.MainActivity;
@@ -129,19 +133,33 @@ public class SongsFragment extends Fragment {
         adapter = new AdapterAudio(getActivity(), arrayList);
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickItemMusicListener(position -> {
+            Gson gson = new Gson();
+            String json = gson.toJson(arrayList);
             //start activity
             Intent mIntent = new Intent(getActivity(), PlayActivity.class);
             mIntent.putExtra("postion", position);
-            mIntent.putExtra("audio", arrayList.get(position));
+            mIntent.putExtra("list", json);
             startActivity(mIntent);
             //start service
-            Gson gson = new Gson();
-            String json = gson.toJson(arrayList);
-            Intent intent = new Intent(getActivity(), PlayMusicService.class);
-            intent.putExtra("list", json);
-            intent.putExtra("postion", position);
-            ContextCompat.startForegroundService(getActivity(), intent);
+            if (!isMyServiceRunning(PlayMusicService.class)) {
+                Intent intent = new Intent(getActivity(), PlayMusicService.class);
+                intent.putExtra("list", json);
+                intent.putExtra("postion", position);
+                ContextCompat.startForegroundService(getActivity(), intent);
+            } else {
+                EventBus.getDefault().post(new PlayAudio(position));
+            }
         });
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

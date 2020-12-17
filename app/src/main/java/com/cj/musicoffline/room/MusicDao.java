@@ -23,7 +23,4 @@ public interface MusicDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFavourite(FavouriteModel favouriteModel);
-
-//    @Query("SELECT * FROM favourite WHERE idAlbum = idalbum")
-//    LiveData<List<FavouriteModel>> getFavorite(String idalbum);
 }

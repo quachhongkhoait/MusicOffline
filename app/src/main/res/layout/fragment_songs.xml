@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ui.fragment.library.songs.SongsFragment">
 
     <RelativeLayout
@@ -16,13 +17,14 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/mReCyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/mRltBack" />
+        android:layout_below="@id/mRltBack"
+        android:visibility="gone" />
 
     <ProgressBar
+        android:indeterminateTint="@color/white"
         android:id="@+id/mPB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

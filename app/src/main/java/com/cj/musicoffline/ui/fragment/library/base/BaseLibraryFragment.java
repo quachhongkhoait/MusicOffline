@@ -75,7 +75,6 @@ public class BaseLibraryFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ChangeFragment(ChangeFragment cf) {
-        Toast.makeText(getActivity(), "aaaaaaaa", Toast.LENGTH_SHORT).show();
         replaceFragment(cf.getFm(), true);
     }
 }

@@ -3,17 +3,27 @@ package com.cj.musicoffline.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "audio")
 public class AudioModel implements Parcelable {
+
+    @NonNull
+    @PrimaryKey
+    private String url;
     private String title;
     private String duration;
-    private String url;
     private String idAlbum;
+    private String nameAlbum;
 
-    public AudioModel(String title, String duration, String url, String idAlbum) {
+    public AudioModel(@NonNull String url, String title, String duration, String idAlbum, String nameAlbum) {
+        this.url = url;
         this.title = title;
         this.duration = duration;
-        this.url = url;
         this.idAlbum = idAlbum;
+        this.nameAlbum = nameAlbum;
     }
 
     protected AudioModel(Parcel in) {
@@ -21,6 +31,7 @@ public class AudioModel implements Parcelable {
         duration = in.readString();
         url = in.readString();
         idAlbum = in.readString();
+        nameAlbum = in.readString();
     }
 
     public static final Creator<AudioModel> CREATOR = new Creator<AudioModel>() {
@@ -67,6 +78,18 @@ public class AudioModel implements Parcelable {
         this.idAlbum = idAlbum;
     }
 
+    public String getNameAlbum() {
+        return nameAlbum;
+    }
+
+    public void setNameAlbum(String nameAlbum) {
+        this.nameAlbum = nameAlbum;
+    }
+
+    public static Creator<AudioModel> getCREATOR() {
+        return CREATOR;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -78,5 +101,6 @@ public class AudioModel implements Parcelable {
         parcel.writeString(duration);
         parcel.writeString(url);
         parcel.writeString(idAlbum);
+        parcel.writeString(nameAlbum);
     }
 }

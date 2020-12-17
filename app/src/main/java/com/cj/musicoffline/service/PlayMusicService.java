@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -75,19 +76,23 @@ public class PlayMusicService extends Service implements Playable {
         }
         Uri uri = Uri.parse(mList.get(pos).getUrl());//"content://media/external/audio/media/25"
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                if (pos >= (mList.size() - 1)) {
-                    mediaPlayer.stop();
-                } else {
-                    onMusicNext();
+        try{
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    if (pos >= (mList.size() - 1)) {
+                        mediaPlayer.stop();
+                    } else {
+                        onMusicNext();
+                    }
                 }
-            }
-        });
-        CreateNotification.createNotification(this, R.drawable.ic_pause, pos, mList);
-        startForeground(1, CreateNotification.notification);
+            });
+            CreateNotification.createNotification(this, R.drawable.ic_pause, pos, mList);
+            startForeground(1, CreateNotification.notification);
+        }catch (Exception e){
+            Toast.makeText(this, "Bài hát không tồn tại", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initMediaPlayer() {

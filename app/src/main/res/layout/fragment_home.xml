@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.home.HomeFragment"
-        android:background="@drawable/background">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        tools:context=".ui.fragment.home.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.appcompat.widget.Toolbar
@@ -12,56 +12,65 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#00000000">
+
         <TextView
-                android:textColor="#5B5B5B"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="OffLineMP3"
+                android:textColor="#5B5B5B"
                 android:textSize="@dimen/_24sdp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
             android:id="@+id/linnerRecommended"
-            android:layout_below="@id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_title"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:orientation="vertical">
+
         <TextView
                 android:id="@+id/txt_title"
-                android:textColor="#FFFFFF"
-                android:text="Đề xuất cho bạn"
-                android:textStyle="bold"
-                android:textSize="@dimen/_24sdp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Đề xuất cho bạn"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_24sdp"
+                android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleView_recommended"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_below="@id/txt_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_below="@id/txt_title"
+                android:layout_marginTop="@dimen/_10sdp" />
     </LinearLayout>
+
     <LinearLayout
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/linnerRecommended"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/linnerRecommended"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="15dp"
             android:orientation="vertical">
+
         <TextView
                 android:id="@+id/txt_playlist"
-                android:textColor="#FFFFFF"
-                android:text="Playlist của tôi"
-                android:textStyle="bold"
-                android:textSize="@dimen/_24sdp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Playlist của tôi"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_24sdp"
+                android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleView_Playlist"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_below="@id/txt_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_below="@id/txt_title"
+                android:layout_marginTop="@dimen/_10sdp" />
     </LinearLayout>
 
 

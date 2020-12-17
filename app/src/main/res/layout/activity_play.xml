@@ -1,138 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/main_background"
-    android:orientation="vertical"
-    tools:context=".ui.playmusic.PlayActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background"
+        android:orientation="vertical"
+        tools:context=".ui.playmusic.PlayActivity">
 
     <RelativeLayout
-        android:id="@+id/mRltBack"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_alignParentTop="true"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp">
+            android:id="@+id/mRltBack"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_alignParentTop="true"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp">
 
         <ImageView
-            android:id="@+id/mIVBack"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:paddingStart="@dimen/_5sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:src="@drawable/ic_back" />
+                android:id="@+id/mIVBack"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:src="@drawable/ic_back" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toStartOf="@id/mIVAlarm"
-            android:layout_toEndOf="@+id/mIVBack"
-            android:gravity="center"
-            android:text="Now Playing"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@id/mIVAlarm"
+                android:layout_toEndOf="@+id/mIVBack"
+                android:gravity="center"
+                android:text="Now Playing"
+                android:textColor="#fff"
+                android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/mIVAlarm"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_5sdp"
-            android:src="@drawable/ic_alarm" />
+                android:id="@+id/mIVAlarm"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:src="@drawable/ic_alarm" />
     </RelativeLayout>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/mTabDot"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_7sdp"
-        android:layout_below="@id/mRltBack"
-        android:layout_centerHorizontal="true"
-        android:background="@null"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorColor="@null" />
+            android:id="@+id/mTabDot"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_7sdp"
+            android:layout_below="@id/mRltBack"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@null" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/mLLDurection"
-        android:layout_below="@id/mTabDot" />
+            android:id="@+id/mViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/mLLDurection"
+            android:layout_below="@id/mTabDot" />
 
     <LinearLayout
-        android:id="@+id/mLLDurection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mLLClick"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="12">
+            android:id="@+id/mLLDurection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/mLLClick"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="12">
 
         <TextView
-            android:id="@+id/mTVCurrentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="00:00"
-            android:textColor="#fff" />
+                android:id="@+id/mTVCurrentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="00:00"
+                android:textColor="#fff" />
 
         <SeekBar
-            android:id="@+id/mMusicSeekBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:defaultFocusHighlightEnabled="false"
-            android:gravity="center"
-            android:progress="50"
-            android:progressBackgroundTint="@color/white"
-            android:progressTint="@color/white"
-            android:thumbTint="@color/white" />
+                android:id="@+id/mMusicSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:defaultFocusHighlightEnabled="false"
+                android:gravity="center"
+                android:progress="50"
+                android:progressBackgroundTint="@color/white"
+                android:progressTint="@color/white"
+                android:thumbTint="@color/white" />
 
         <TextView
-            android:id="@+id/mTVTotalTime"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="05:00"
-            android:textColor="#fff" />
+                android:id="@+id/mTVTotalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="05:00"
+                android:textColor="#fff" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/mLLClick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="3">
+            android:id="@+id/mLLClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
         <TextView
-            android:id="@+id/mTVPrevious"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:background="@drawable/ic_skip_previous_while" />
+                android:id="@+id/mTVPrevious"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:background="@drawable/ic_skip_previous_while" />
 
         <TextView
-            android:id="@+id/mTVPause"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/ic_pause_while" />
+                android:id="@+id/mTVPause"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@drawable/ic_pause_while" />
 
         <TextView
-            android:id="@+id/mTVNext"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:background="@drawable/ic_skip_next_while" />
+                android:id="@+id/mTVNext"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:background="@drawable/ic_skip_next_while" />
     </LinearLayout>
 </RelativeLayout>

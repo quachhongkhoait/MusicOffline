@@ -3,139 +3,156 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
         android:background="@drawable/background"
-        android:gravity="center"
         tools:context=".ui.fragment.library.LibraryFragment">
 
-    <RelativeLayout
-            android:id="@+id/mSongs"
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_140sdp"
-            android:background="@color/purple_200"
-            android:clickable="true"
-            android:padding="@dimen/_10sdp">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <ImageView
-                android:id="@+id/mImgSong"
-                android:layout_width="@dimen/_44sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:layout_above="@+id/mTVSong"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginBottom="11dp"
-                android:clickable="false"
-                android:src="@drawable/ic_song" />
-
-        <TextView
-                android:id="@+id/mTVSong"
+        <LinearLayout
+                android:layout_marginTop="@dimen/_53sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_23sdp"
-                android:clickable="false"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:text="Bài hát"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-    </RelativeLayout>
+                android:orientation="horizontal">
 
-    <RelativeLayout
-            android:id="@+id/mPlaylist"
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_140sdp"
-            android:layout_below="@id/mSongs"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/purple_200"
-            android:padding="@dimen/_10sdp">
+            <RelativeLayout
+                    android:id="@+id/mSongs"
+                    android:layout_marginRight="@dimen/_30sdp"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:background="@drawable/border_libary_rela"
+                    android:clickable="true"
+                    android:padding="@dimen/_10sdp">
 
-        <ImageView
-                android:id="@+id/mImgPlayList"
-                android:layout_width="@dimen/_44sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginBottom="11dp"
-                android:layout_above="@+id/mTVPlaylist"
-                android:src="@drawable/ic_playlist" />
+                <ImageView
+                        android:id="@+id/mImgSong"
+                        android:layout_width="@dimen/_44sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_above="@+id/mTVSong"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginBottom="11dp"
+                        android:clickable="false"
+                        android:src="@drawable/ic_song" />
 
-        <TextView
-                android:id="@+id/mTVPlaylist"
+                <TextView
+                        android:id="@+id/mTVSong"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_23sdp"
+                        android:clickable="false"
+                        android:gravity="center"
+                        android:text="Bài hát"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/mAlbum"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:background="@drawable/border_libary_rela"
+                    android:padding="@dimen/_10sdp">
+
+                <ImageView
+                        android:id="@+id/mImgAlbum"
+                        android:layout_width="@dimen/_44sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_above="@+id/mTVAlbum"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginBottom="11dp"
+                        android:src="@drawable/ic_album" />
+
+                <TextView
+                        android:id="@+id/mTVAlbum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_23sdp"
+                        android:gravity="center"
+                        android:text="Album"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_marginTop="@dimen/_82sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_23sdp"
-                android:gravity="center"
-                android:text="Playlist"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-    </RelativeLayout>
+                android:orientation="horizontal">
 
-    <RelativeLayout
-            android:id="@+id/mAlbum"
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_140sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_toEndOf="@id/mSongs"
-            android:background="@color/purple_200"
-            android:padding="@dimen/_10sdp">
+            <RelativeLayout
+                    android:id="@+id/mPlaylist"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_30sdp"
+                    android:background="@drawable/border_libary_rela"
+                    android:padding="@dimen/_10sdp">
 
-        <ImageView
-                android:id="@+id/mImgAlbum"
-                android:layout_width="@dimen/_44sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginBottom="11dp"
-                android:layout_above="@+id/mTVAlbum"
-                android:src="@drawable/ic_album" />
+                <ImageView
+                        android:id="@+id/mImgPlayList"
+                        android:layout_width="@dimen/_44sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_above="@+id/mTVPlaylist"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginBottom="11dp"
+                        android:src="@drawable/ic_playlist" />
 
-        <TextView
-                android:id="@+id/mTVAlbum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_23sdp"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:text="Album"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-    </RelativeLayout>
+                <TextView
+                        android:id="@+id/mTVPlaylist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_23sdp"
+                        android:gravity="center"
+                        android:text="Playlist"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+            </RelativeLayout>
 
-    <RelativeLayout
-            android:id="@+id/mFavourite"
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_140sdp"
-            android:layout_below="@id/mAlbum"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_toEndOf="@id/mPlaylist"
-            android:background="@color/purple_200"
-            android:padding="@dimen/_10sdp">
+            <RelativeLayout
+                    android:id="@+id/mFavourite"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_below="@id/mAlbum"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/border_libary_rela"
+                    android:padding="@dimen/_10sdp">
 
-        <ImageView
-                android:id="@+id/mImgFavourite"
-                android:layout_width="@dimen/_44sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginBottom="11dp"
-                android:layout_above="@+id/mTVFavourite"
-                android:src="@drawable/ic_love" />
+                <ImageView
+                        android:id="@+id/mImgFavourite"
+                        android:layout_width="@dimen/_44sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_above="@+id/mTVFavourite"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginBottom="11dp"
+                        android:src="@drawable/ic_love" />
 
-        <TextView
-                android:id="@+id/mTVFavourite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_23sdp"
-                android:gravity="center"
-                android:text="Yêu thích"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-    </RelativeLayout>
+                <TextView
+                        android:id="@+id/mTVFavourite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_23sdp"
+                        android:gravity="center"
+                        android:text="Yêu thích"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

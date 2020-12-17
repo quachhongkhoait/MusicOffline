@@ -1,8 +1,13 @@
 package com.cj.musicoffline.ui.fragment.library.songs;
 
+import android.Manifest;
 import android.app.ActivityManager;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +34,10 @@ import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.eventbuss.SendStartAudio;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.service.PlayMusicService;
+import com.cj.musicoffline.ui.fragment.library.dialog.ShowBottomSheetDialog;
+import com.cj.musicoffline.ui.main.MainActivity;
 import com.cj.musicoffline.ui.playmusic.PlayActivity;
+import com.cj.musicoffline.utils.Constain;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -76,7 +84,7 @@ public class SongsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new AdapterAudio(getActivity(), arrayList);
+        adapter = new AdapterAudio(getActivity(), arrayList, SongsFragment.this);
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickItemMusicListener(position -> {
             Gson gson = new Gson();
@@ -108,6 +116,15 @@ public class SongsFragment extends Fragment {
         return false;
     }
 
+    public void showBottomSheetDialog() {
+        ShowBottomSheetDialog showBottomSheetDialog = new ShowBottomSheetDialog();
+        showBottomSheetDialog.show(getFragmentManager(), Constain.keyBottomSheet);
+        Fragment fragment = getFragmentManager().findFragmentByTag(Constain.keyBottomSheet);
+        if (fragment != null) {
+//            getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getAllMusic() {
         mViewModel.getAllMusic().observe(getViewLifecycleOwner(), new Observer<List<AudioModel>>() {
@@ -123,81 +140,14 @@ public class SongsFragment extends Fragment {
         });
     }
 
-//    private void checkPermission() {
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-//                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-//            } else {
-//                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-//            }
-//        } else {
-//            getMusic();
-//        }
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode) {
-//            case 1: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-//                            == PackageManager.PERMISSION_GRANTED) {
-//                        getMusic();
-//                    }
-//                } else {
-//                    getActivity().finish();
-//                }
-//                return;
-//            }
-//        }
-//    }
-
-//    private void getMusic() {
-//        arrayList.clear();
-//        ContentResolver contentResolver = getActivity().getContentResolver();
-//        Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-//        Cursor songCursor = contentResolver.query(songUri, null, null, null, null);
-//        if (songCursor != null && songCursor.moveToFirst()) {
-//            int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-//            int songDuration = songCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
-//            int songID = songCursor.getColumnIndex(MediaStore.Audio.Media._ID);
-//            do {
-//                String currentTitle = songCursor.getString(songTitle);
-//                String currentDuration = songCursor.getString(songDuration);
-////                String currentDuration = HandlingMusic.convertDuration(songCursor.getLong(songCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
-//                Long ur = songCursor.getLong(songID);
-//                Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, ur);
-//                String albumId = songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
-//
-//                insertRoom(new AudioModel(currentTitle, currentDuration, String.valueOf(trackUri), albumId));
-//                arrayList.add(new AudioModel(currentTitle, currentDuration, String.valueOf(trackUri), albumId));
-//                urltest = trackUri;
-//                urlimage = albumId;
-//            } while (songCursor.moveToNext());
-//            adapter.notifyDataSetChanged();
-//            mProgressBar.setVisibility(View.GONE);
-//            mRecyclerView.setVisibility(View.VISIBLE);
-//        }
-//    }
-
-//    private void insertRoom(AudioModel audioModel) {
-//        MusicRepository mReponsitory = new MusicRepository(getActivity().getApplication());
-//        mReponsitory.insert(audioModel);
-//    }
-
-
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

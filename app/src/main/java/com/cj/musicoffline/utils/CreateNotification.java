@@ -74,7 +74,7 @@ public class CreateNotification {
         notificationIntent.putExtra("postion", postion);
         notificationIntent.putExtra("list", json);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews notificationLayout =
                 new RemoteViews(context.getPackageName(), R.layout.notification_push);
@@ -96,7 +96,7 @@ public class CreateNotification {
         notification = new NotificationCompat.Builder(context, App.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_music_note)
                 .setLargeIcon(icon)
-//                .setCustomContentView(notificationLayout)
+                .setCustomContentView(notificationLayout)
                 .setCustomBigContentView(notificationLayout)
                 .setContentIntent(pendingIntent)
                 .build();

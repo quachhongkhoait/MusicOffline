@@ -5,20 +5,24 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class App extends Application {
     public static String CHANNEL_ID = "ServiceChannel";
     public static LocalBroadcastManager mBroadcaster;
+    public static ViewModelProvider.Factory factory;
+
     @Override
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
         mBroadcaster = LocalBroadcastManager.getInstance(this);
+        factory = new ViewModelProvider.AndroidViewModelFactory(this);
     }
 
     private void createNotificationChannel() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(
                     CHANNEL_ID,
                     "Khoa Nè",
@@ -28,4 +32,6 @@ public class App extends Application {
             manager.createNotificationChannel(notificationChannel);
         }
     }
+
+
 }

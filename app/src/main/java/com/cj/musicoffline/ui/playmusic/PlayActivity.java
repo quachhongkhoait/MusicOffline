@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.SendService;
 import com.cj.musicoffline.eventbuss.SendUI;
+import com.cj.musicoffline.eventbuss.UpdateSeekBar;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.service.PlayMusicService;
 import com.cj.musicoffline.ui.playmusic.fragment.InfoFragment;
@@ -49,8 +51,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTVPrevious, mTVPause, mTVNext, mTVTotalTime, mTVCurrentTime;
     private SeekBar mSeekBar;
     private Handler mHandler = new Handler();
+    private Runnable mRunnable;
     public static int position;
     public static boolean isPlayingUI = true;
+    private volatile boolean mIsStopped = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         position = getIntent().getIntExtra("postion", 0);
         setUp();
         onClick();
-        addData(mList.get(position));
+        addData(PlayMusicService.mediaPlayer);
     }
 
     private void onClick() {
@@ -86,7 +90,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         mTVCurrentTime = findViewById(R.id.mTVCurrentTime);
         mSeekBar = findViewById(R.id.mMusicSeekBar);
 
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.mTabDot);
+        TabLayout mTabLayout = findViewById(R.id.mTabDot);
         mViewPager = findViewById(R.id.mViewPager);
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         //
@@ -110,7 +114,6 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUI(SendUI sendUI) {
         if (isStringInt(sendUI.getAction())) {
-            addData(mList.get(sendUI.getPosition()));
             changStart("play");
         } else {
             if (sendUI.getAction().equals("close")) {
@@ -122,6 +125,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateSeekBar(UpdateSeekBar updateSeekBar) {
+//        mIsStopped = true;
+//        mHandler = new Handler();
+        addData(PlayMusicService.mediaPlayer);
+    }
+
     private void changStart(String s) {
         if (s.equals("pause")) {
             mTVPause.setBackgroundResource(R.drawable.ic_play_while);
@@ -130,7 +140,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void addData(AudioModel audioModel) {
+    private void addData(MediaPlayer mediaPlayer) {
         mSeekBar.setProgress(PlayMusicService.mediaPlayer.getCurrentPosition() / 1000 % 60);
         mSeekBar.setMax(PlayMusicService.mediaPlayer.getDuration());
         mTVTotalTime.setText(HandlingMusic.createTimerLabel(PlayMusicService.mediaPlayer.getDuration()));
@@ -154,17 +164,15 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-        final Runnable mRunnable = new Runnable() {
+        mRunnable = new Runnable() {
             @Override
             public void run() {
-                if (PlayMusicService.mediaPlayer != null) {
-                    mSeekBar.setProgress(PlayMusicService.mediaPlayer.getCurrentPosition());
-                    int mCurrentPosition = mSeekBar.getProgress();
-                    mTVCurrentTime.setText(HandlingMusic.createTimerLabel(mCurrentPosition));
-                    if (mSeekBar.getProgress() == mSeekBar.getMax()) {
+                mSeekBar.setProgress(PlayMusicService.mediaPlayer.getCurrentPosition());
+                int mCurrentPosition = mSeekBar.getProgress();
+                mTVCurrentTime.setText(HandlingMusic.createTimerLabel(mCurrentPosition));
+                if (mSeekBar.getProgress() == mSeekBar.getMax()) {
 //                        rotate.cancel();
 //                        mImgAlbum.startAnimation(rotate);
-                    }
                 }
                 mHandler.postDelayed(this, 1000);
             }
@@ -210,11 +218,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("nnn", "sendService: " + position);
             if (action.equals("previous")) {
                 position -= 1;
-                addData(mList.get(position));
                 EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
             } else if (action.equals("next")) {
                 position += 1;
-                addData(mList.get(position));
                 EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
             } else if (action.equals("play")) {
                 updateUI(new SendUI(0, "play"));
@@ -259,4 +265,5 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 }

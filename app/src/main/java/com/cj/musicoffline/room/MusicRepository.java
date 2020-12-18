@@ -13,6 +13,7 @@ import java.util.List;
 public class MusicRepository {
     private MusicDao mMusicDao;
     private LiveData<List<AudioModel>> mAllMusic;
+    private LiveData<List<AudioModel>> mAllByID;
 
     public MusicRepository(Context context) {
         MusicDatabase db = MusicDatabase.getDatabase(context);
@@ -28,5 +29,9 @@ public class MusicRepository {
         MusicDatabase.databaseWriteExecutor.execute(() -> {
             mMusicDao.insert(word);
         });
+    }
+
+    public LiveData<List<AudioModel>> getAllByID(String m) {
+        return mMusicDao.getAllByID(m);
     }
 }

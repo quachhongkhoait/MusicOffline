@@ -13,8 +13,7 @@ import java.util.List;
 
 public class SongsViewModel extends AndroidViewModel {
     private MusicRepository mRepository;
-    private LiveData<List<AudioModel>> mAllMusic = new LiveData<List<AudioModel>>() {
-    };
+    private LiveData<List<AudioModel>> mAllMusic;
 
     public SongsViewModel(@NonNull Application application) {
         super(application);

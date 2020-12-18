@@ -21,6 +21,6 @@ public interface MusicDao {
     @Query("SELECT * FROM audio")
     LiveData<List<AudioModel>> getAllMusics();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertFavourite(FavouriteModel favouriteModel);
+    @Query("SELECT * FROM audio WHERE url = :m")
+    LiveData<List<AudioModel>> getAllByID(String m);
 }

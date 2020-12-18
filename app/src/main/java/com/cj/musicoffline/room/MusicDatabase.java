@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {AudioModel.class, FavouriteModel.class}, version = 1, exportSchema = false)
 abstract class MusicDatabase extends RoomDatabase {
     abstract MusicDao musicDao();
+    abstract FavouriteDao favouriteDao();
 
     private static volatile MusicDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

@@ -37,7 +37,9 @@ import com.cj.musicoffline.service.PlayMusicService;
 import com.cj.musicoffline.ui.fragment.library.dialog.ShowBottomSheetDialog;
 import com.cj.musicoffline.ui.main.MainActivity;
 import com.cj.musicoffline.ui.playmusic.PlayActivity;
+import com.cj.musicoffline.utils.CheckService;
 import com.cj.musicoffline.utils.Constain;
+import com.cj.musicoffline.viewmodel.ShareViewModel;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,8 +51,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class SongsFragment extends Fragment {
-    private SongsViewModel mViewModel;
-    public static List<AudioModel> arrayList = new ArrayList<>();
+    private ShareViewModel mViewModel;
+    private List<AudioModel> arrayList = new ArrayList<>();
     AdapterAudio adapter;
     RecyclerView mRecyclerView;
     Uri urltest = null;
@@ -64,7 +66,7 @@ public class SongsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_songs, container, false);
 //        ViewModelProvider.AndroidViewModelFactory.getInstance(
 //                getActivity().getApplication()).create(SongsViewModel.class);
-        mViewModel = new ViewModelProvider(this, App.factory).get(SongsViewModel.class);
+        mViewModel = new ViewModelProvider(this, App.factory).get(ShareViewModel.class);
         init(view);
         return view;
     }
@@ -95,7 +97,7 @@ public class SongsFragment extends Fragment {
             mIntent.putExtra("list", json);
             startActivity(mIntent);
             //start service
-            if (!isMyServiceRunning(PlayMusicService.class)) {
+            if (!CheckService.isMyServiceRunning(getActivity(), PlayMusicService.class)) {
                 Intent intent = new Intent(getActivity(), PlayMusicService.class);
                 intent.putExtra("list", json);
                 intent.putExtra("postion", position);
@@ -106,18 +108,8 @@ public class SongsFragment extends Fragment {
         });
     }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void showBottomSheetDialog() {
-        ShowBottomSheetDialog showBottomSheetDialog = new ShowBottomSheetDialog();
+    public void showBottomSheetDialog(AudioModel model, String check) {
+        ShowBottomSheetDialog showBottomSheetDialog = new ShowBottomSheetDialog(model, check, mViewModel, "favourite");
         showBottomSheetDialog.show(getFragmentManager(), Constain.keyBottomSheet);
         Fragment fragment = getFragmentManager().findFragmentByTag(Constain.keyBottomSheet);
         if (fragment != null) {
@@ -127,16 +119,12 @@ public class SongsFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getAllMusic() {
-        mViewModel.getAllMusic().observe(getViewLifecycleOwner(), new Observer<List<AudioModel>>() {
-            @Override
-            public void onChanged(List<AudioModel> audioModels) {
-                for (AudioModel audioModel : audioModels) {
-                    arrayList.add(audioModel);
-                }
-                mProgressBar.setVisibility(View.GONE);
-                mRecyclerView.setVisibility(View.VISIBLE);
-                adapter.notifyDataSetChanged();
-            }
+        mViewModel.getAllMusic().observe(getViewLifecycleOwner(), audioModels -> {
+            arrayList.clear();
+            arrayList.addAll(audioModels);
+            mProgressBar.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged();
         });
     }
 

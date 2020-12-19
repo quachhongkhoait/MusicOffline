@@ -28,4 +28,8 @@ public interface PlayListDao {
     @Query("DELETE FROM playlist WHERE id = :id")
     void deleteByID(int id);
 
+    //update
+    @Query("UPDATE playlist SET count = :count WHERE id = :id")
+    void updatePlayList(int id, int count);
+
 }

@@ -27,4 +27,7 @@ public interface MusicDao {
 
     @Query("DELETE FROM audio")
     void deleteAll();
+
+    @Query("SELECT * FROM audio WHERE url = :m")
+    LiveData<AudioModel> getByID(String m);
 }

@@ -9,9 +9,9 @@ import androidx.lifecycle.LiveData;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.model.FavouriteModel;
 import com.cj.musicoffline.model.PlayListModel;
+import com.cj.musicoffline.model.SearchContent;
 import com.cj.musicoffline.room.FavouriteRepository;
 import com.cj.musicoffline.room.MusicRepository;
-import com.cj.musicoffline.room.PlayListDao;
 import com.cj.musicoffline.room.PlayListRepository;
 
 import java.util.List;
@@ -26,11 +26,14 @@ public class ShareViewModel extends AndroidViewModel {
     //playlist
     private PlayListRepository mRepositoryPlayList;
     private LiveData<List<PlayListModel>> mAllPlayList;
+    //search repo to music
+    private LiveData<List<SearchContent>> mAllSearch;
 
     public ShareViewModel(@NonNull Application application) {
         super(application);
         mRepositorySongs = new MusicRepository(application);
         mAllMusic = mRepositorySongs.getAllMusic();
+        mAllSearch = mRepositorySongs.getAllSearch();
 
         mRepositoryFavourite = new FavouriteRepository(application);
 
@@ -49,6 +52,10 @@ public class ShareViewModel extends AndroidViewModel {
 
     public LiveData<List<AudioModel>> getAllByID(String url) {
         return mRepositorySongs.getAllByID(url);
+    }
+
+    public LiveData<AudioModel> getByID(String url) {
+        return mRepositorySongs.getByID(url);
     }
 
     //start favourite
@@ -82,8 +89,24 @@ public class ShareViewModel extends AndroidViewModel {
         mRepositoryPlayList.deletePlayList(s);
     }
 
-//    public LiveData<List<PlayListModel>> getAllPlayList() {
-//        return mAllPlayList;
-//    }
+    public void updatePlayList(int id, int count) {
+        mRepositoryPlayList.updatePlayList(id, count);
+    }
 
+    //search
+    public void insertSearch(SearchContent searchContent) {
+        mRepositorySongs.insertSearch(searchContent);
+    }
+
+    public void deleteSearch(String url) {
+        mRepositorySongs.deleteSearch(url);
+    }
+
+    public void deleteAllSearch() {
+        mRepositorySongs.deleteAllSearch();
+    }
+
+    public LiveData<List<SearchContent>> getAllSearch() {
+        return mAllSearch;
+    }
 }

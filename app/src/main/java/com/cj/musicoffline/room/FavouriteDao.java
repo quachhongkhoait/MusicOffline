@@ -24,6 +24,6 @@ public interface FavouriteDao {
     @Query("DELETE FROM favourite WHERE id = :id")
     void deleteFavourite(int id);
 
-    @Query("SELECT COUNT(idplaylist) FROM favourite WHERE idplaylist = :id")
+    @Query("SELECT COUNT(*) FROM favourite WHERE idplaylist = :id")
     LiveData<Integer> getCountFavourite(int id);
 }

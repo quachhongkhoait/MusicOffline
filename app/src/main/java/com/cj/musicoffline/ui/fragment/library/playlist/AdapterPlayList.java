@@ -31,24 +31,16 @@ public class AdapterPlayList extends RecyclerView.Adapter<AdapterPlayList.ViewHo
     }
 
     private Context mContext;
-    private List<PlayList> mList;
+    private List<PlayListModel> mList;
     private ShareViewModel mModel;
     private AdapterPlayList.OnClickItemMusicListener onClickItemMusicListener;
 
-    public AdapterPlayList(Context mContext, List<PlayList> mList, ShareViewModel mModel, OnClickItemMusicListener onClickItemMusicListener) {
+    public AdapterPlayList(Context mContext, List<PlayListModel> mList, ShareViewModel mModel, OnClickItemMusicListener onClickItemMusicListener) {
         this.mContext = mContext;
         this.mList = mList;
         this.mModel = mModel;
         this.onClickItemMusicListener = onClickItemMusicListener;
     }
-
-    //    void setData(List<PlayListModel> list, List<String> listCount) {
-//        mList.clear();
-//        mListCount.clear();
-//        this.mList.addAll(list);
-//        this.mListCount.addAll(listCount);
-//        notifyDataSetChanged();
-//    }
 
     @NonNull
     @Override
@@ -64,12 +56,6 @@ public class AdapterPlayList extends RecyclerView.Adapter<AdapterPlayList.ViewHo
     public void onBindViewHolder(@NonNull AdapterPlayList.ViewHolder holder, final int position) {
         holder.mTvTitle.setText(mList.get(position).getNameList());
         holder.mTvCountSongs.setText(mList.get(position).getCount() + " bài");
-//        if (mListCount.get(position) == 0) {
-//            holder.mTvCountSongs.setText("0 bài");
-//        } else {
-
-//        Log.d("nnn", "onBindViewHolder: " + mListCount.size());
-//        }
 
         holder.mRIVPlayList.setImageResource(R.drawable.bg_musicerror);
         holder.mLLClick.setOnClickListener(view -> onClickItemMusicListener.onClickOpen(position, mList.get(position).getId()));

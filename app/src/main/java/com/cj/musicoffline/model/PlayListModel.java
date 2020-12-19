@@ -8,10 +8,12 @@ public class PlayListModel {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String nameList;
+    private int count;
 
-    public PlayListModel(int id, String nameList) {
+    public PlayListModel(int id, String nameList, int count) {
         this.id = id;
         this.nameList = nameList;
+        this.count = count;
     }
 
     public int getId() {
@@ -28,5 +30,13 @@ public class PlayListModel {
 
     public void setNameList(String nameList) {
         this.nameList = nameList;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

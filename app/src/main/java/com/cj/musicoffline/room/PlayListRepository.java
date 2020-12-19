@@ -33,4 +33,10 @@ public class PlayListRepository {
             mPlayListDao.deleteByID(id);
         });
     }
+
+    public void updatePlayList(int id, int count) {
+        MusicDatabase.databaseWriteExecutor.execute(() -> {
+            mPlayListDao.updatePlayList(id, count);
+        });
+    }
 }

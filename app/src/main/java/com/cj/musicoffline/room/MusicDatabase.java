@@ -6,23 +6,27 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.model.FavouriteModel;
 import com.cj.musicoffline.model.PlayListModel;
+import com.cj.musicoffline.model.SearchContent;
 import com.cj.musicoffline.utils.PopulateDbAsync;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {AudioModel.class, FavouriteModel.class, PlayListModel.class}, version = 2, exportSchema = false)
+@Database(entities = {AudioModel.class, FavouriteModel.class, PlayListModel.class,SearchContent.class}, version = 4, exportSchema = false)
 public abstract class MusicDatabase extends RoomDatabase {
     public abstract MusicDao musicDao();
 
     public abstract FavouriteDao favouriteDao();
 
     public abstract PlayListDao playlistDao();
+
+    public abstract SearchDao searchDao();
 
     private static volatile MusicDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

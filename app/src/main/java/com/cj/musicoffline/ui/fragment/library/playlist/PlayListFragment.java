@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.cj.musicoffline.app.App;
 import com.cj.musicoffline.eventbuss.BackFragment;
 import com.cj.musicoffline.model.FavouriteModel;
 import com.cj.musicoffline.model.PlayList;
+import com.cj.musicoffline.model.PlayListModel;
 import com.cj.musicoffline.ui.fragment.library.dialog.CustomDialog;
 import com.cj.musicoffline.viewmodel.ShareViewModel;
 
@@ -33,15 +35,18 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PlayListFragment extends Fragment implements View.OnClickListener {
+    @Override
+    public void setInitialSavedState(@Nullable SavedState state) {
+        super.setInitialSavedState(state);
+    }
+
     private TextView mTVNullPlayList;
     private ImageView mIVBack, mIVAddList;
     private AdapterPlayList mAdapter;
     private RecyclerView mRecyclerView;
-    private List<PlayList> arrayList = new ArrayList<>();
-    //    private List<String> mListCount = new ArrayList<>();
+    private List<PlayListModel> arrayList = new ArrayList<>();
     private RecyclerView.LayoutManager mLayoutManager;
     public static boolean isInsert = false;
     private ShareViewModel mViewModel;
@@ -64,35 +69,19 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getPlayList() {
-        AtomicBoolean isCount = new AtomicBoolean(false);
         mViewModel.getPlayList().observe(getViewLifecycleOwner(), playListModels -> {
-//            arrayList.addAll(playListModels);
             arrayList.clear();
-//            mListCount.clear();
-            playListModels.forEach(it -> {
-                cout = 0;
-                isCount.set(true);
-                mViewModel.getCountFavourite(it.getId()).observe(getViewLifecycleOwner(), integer -> {
-                    arrayList.add(new PlayList(it.getId(), it.getNameList(), integer));
-                    isCount.set(false);
-                });
-                if (isCount.get()) {
-                    arrayList.add(new PlayList(it.getId(), it.getNameList(), 0));
-                }
-//                mAdapter.setData(playListModels, mListCount);
-            });
+            arrayList.addAll(playListModels);
             mAdapter.notifyDataSetChanged();
-//            for (PlayListModel it : playListModels) {
-//                mViewModel.getCountFavourite(it.getId()).observe(getViewLifecycleOwner(), integer -> {
-//                    mListCount.add("" + integer);
-//                });
-//                mListCount.add("0");
-//            }
-//            for (String a : mListCount) {
-//                Log.d("nnn", "onClickOpen: " + a);
-//            }
+            for (PlayListModel it : playListModels) {
+                cout = 0;
+                mViewModel.getCountFavourite(it.getId()).observe(getViewLifecycleOwner(), integer -> {
+                    cout = integer;
+                    mViewModel.updatePlayList(it.getId(), cout);
+                });
+                mAdapter.notifyDataSetChanged();
+            }
             if (playListModels.size() == 0) {
-//                mAdapter.notifyDataSetChanged();
                 mTVNullPlayList.setVisibility(View.VISIBLE);
             } else {
                 mTVNullPlayList.setVisibility(View.GONE);
@@ -115,11 +104,7 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
         mAdapter = new AdapterPlayList(getActivity(), arrayList, mViewModel, new AdapterPlayList.OnClickItemMusicListener() {
             @Override
             public void onClickOpen(int pos, int id) {
-
-//                Log.d("nnn", "onClickOpen: " + mListCount.size());
-//                for (String a : mListCount) {
-//                    Log.d("nnn", "onClickOpen: " + a);
-//                }
+                Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 if (isInsert) {
                     isInsert = false;
                     EventBus.getDefault().post(new BackFragment());

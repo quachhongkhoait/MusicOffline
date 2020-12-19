@@ -59,7 +59,6 @@ public class ShowBottomSheetDialog extends BottomSheetDialogFragment implements 
         setUp(mView);
         setData();
         setOnClick();
-        Log.d("nnn", "onCreateView:ShowBottomSheetDialog ");
         return mView;
     }
 

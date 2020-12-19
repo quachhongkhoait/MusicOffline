@@ -44,7 +44,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.mTVOK) {
             String nameList = mEDTNameList.getText().toString();
-            mShareViewModel.insertPlayList(new PlayListModel(0, nameList));
+            mShareViewModel.insertPlayList(new PlayListModel(0, nameList, 1));
         }
         dismiss();
     }

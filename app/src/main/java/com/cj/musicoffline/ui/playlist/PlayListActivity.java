@@ -1,4 +1,4 @@
-package com.cj.musicoffline.ui;
+package com.cj.musicoffline.ui.playlist;
 
 import androidx.appcompat.app.AppCompatActivity;
 

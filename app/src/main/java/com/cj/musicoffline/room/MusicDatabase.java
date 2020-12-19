@@ -2,37 +2,55 @@ package com.cj.musicoffline.room;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.model.FavouriteModel;
+import com.cj.musicoffline.model.PlayListModel;
+import com.cj.musicoffline.utils.PopulateDbAsync;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {AudioModel.class, FavouriteModel.class}, version = 1, exportSchema = false)
-abstract class MusicDatabase extends RoomDatabase {
-    abstract MusicDao musicDao();
-    abstract FavouriteDao favouriteDao();
+@Database(entities = {AudioModel.class, FavouriteModel.class, PlayListModel.class}, version = 2, exportSchema = false)
+public abstract class MusicDatabase extends RoomDatabase {
+    public abstract MusicDao musicDao();
+
+    public abstract FavouriteDao favouriteDao();
+
+    public abstract PlayListDao playlistDao();
 
     private static volatile MusicDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static MusicDatabase getDatabase(final Context context) {
+    public static MusicDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (MusicDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             MusicDatabase.class, "musicoffline_database")
                             .fallbackToDestructiveMigration()
+                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+    private static RoomDatabase.Callback sRoomDatabaseCallback =
+            new RoomDatabase.Callback() {
+
+                @Override
+                public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                    super.onOpen(db);
+                    new PopulateDbAsync(INSTANCE).execute();
+                }
+            };
 }

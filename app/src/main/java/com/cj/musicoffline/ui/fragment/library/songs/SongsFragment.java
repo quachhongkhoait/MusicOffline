@@ -55,8 +55,6 @@ public class SongsFragment extends Fragment {
     private List<AudioModel> arrayList = new ArrayList<>();
     AdapterAudio adapter;
     RecyclerView mRecyclerView;
-    Uri urltest = null;
-    String urlimage = null;
     private ProgressBar mProgressBar;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -64,8 +62,6 @@ public class SongsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_songs, container, false);
-//        ViewModelProvider.AndroidViewModelFactory.getInstance(
-//                getActivity().getApplication()).create(SongsViewModel.class);
         mViewModel = new ViewModelProvider(this, App.factory).get(ShareViewModel.class);
         init(view);
         return view;
@@ -76,7 +72,6 @@ public class SongsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getAllMusic();
-//        checkPermission();
     }
 
     private void init(View view) {
@@ -109,7 +104,7 @@ public class SongsFragment extends Fragment {
     }
 
     public void showBottomSheetDialog(AudioModel model, String check) {
-        ShowBottomSheetDialog showBottomSheetDialog = new ShowBottomSheetDialog(model, check, mViewModel, "favourite");
+        ShowBottomSheetDialog showBottomSheetDialog = new ShowBottomSheetDialog(model, check, mViewModel, 1);
         showBottomSheetDialog.show(getFragmentManager(), Constain.keyBottomSheet);
         Fragment fragment = getFragmentManager().findFragmentByTag(Constain.keyBottomSheet);
         if (fragment != null) {

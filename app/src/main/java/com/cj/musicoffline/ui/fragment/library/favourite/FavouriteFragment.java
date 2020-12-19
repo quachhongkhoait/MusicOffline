@@ -99,7 +99,7 @@ public class FavouriteFragment extends Fragment {
     }
 
     private void getAllFavourite() {
-        mModel.getAllFavourite("favourite").observe(this, favouriteModels -> {
+        mModel.getFavourite(1).observe(this, favouriteModels -> {
             mListID.clear();
             arrayList.clear();
             mListID.addAll(favouriteModels);
@@ -124,6 +124,6 @@ public class FavouriteFragment extends Fragment {
         if (fragment != null) {
 //            getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
-        showBottomSheetDialog.addInFavourite(model, check, mModel, "favourite", id);
+        showBottomSheetDialog.addInFavourite(model, check, mModel, 1, id);
     }
 }

@@ -9,12 +9,12 @@ public class FavouriteModel {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String url;
-    private String idAlbum;
+    private int idplaylist;
 
-    public FavouriteModel(int id, String url, String idAlbum) {
+    public FavouriteModel(int id, String url, int idplaylist) {
         this.id = id;
         this.url = url;
-        this.idAlbum = idAlbum;
+        this.idplaylist = idplaylist;
     }
 
     public int getId() {
@@ -33,11 +33,11 @@ public class FavouriteModel {
         this.url = url;
     }
 
-    public String getIdAlbum() {
-        return idAlbum;
+    public int getIdplaylist() {
+        return idplaylist;
     }
 
-    public void setIdAlbum(String idAlbum) {
-        this.idAlbum = idAlbum;
+    public void setIdplaylist(int idplaylist) {
+        this.idplaylist = idplaylist;
     }
 }

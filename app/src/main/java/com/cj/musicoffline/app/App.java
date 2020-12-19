@@ -8,6 +8,8 @@ import android.os.Build;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.cj.musicoffline.utils.SessionManager;
+
 public class App extends Application {
     public static String CHANNEL_ID = "ServiceChannel";
     public static LocalBroadcastManager mBroadcaster;
@@ -16,6 +18,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SessionManager.getInstance().init(this);
         createNotificationChannel();
         mBroadcaster = LocalBroadcastManager.getInstance(this);
         factory = new ViewModelProvider.AndroidViewModelFactory(this);

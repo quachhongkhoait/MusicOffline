@@ -14,19 +14,22 @@ import android.content.ContentUris;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.cj.musicoffline.R;
+import com.cj.musicoffline.eventbuss.BackFragment;
 import com.cj.musicoffline.itf.OnCurrentFragmentListener;
 import com.cj.musicoffline.model.AudioModel;
+import com.cj.musicoffline.room.MusicDao;
+import com.cj.musicoffline.room.MusicDatabase;
 import com.cj.musicoffline.room.MusicRepository;
-import com.cj.musicoffline.ui.fragment.library.base.BaseLibraryFragment;
-import com.cj.musicoffline.ui.fragment.library.songs.SongsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class MainActivity extends AppCompatActivity implements OnCurrentFragmentListener {
     private ViewPagerAdapter mAdapter;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         setUp();
         checkPermission();
     }
@@ -93,6 +97,11 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
         }
     }
 
+    @Subscribe
+    public void CallBackFragment(BackFragment backFragment) {
+        backStack();
+    }
+
     private boolean backStack() {
         for (Fragment frag : getSupportFragmentManager().getFragments()) {
             if (frag.isVisible() && mViewPager.getCurrentItem() == 2) {
@@ -115,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         } else {
-            getMusic();
+            new InsertAsync(MusicDatabase.getDatabase(this)).execute();
         }
     }
 
@@ -127,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                             == PackageManager.PERMISSION_GRANTED) {
-                        getMusic();
+                        new InsertAsync(MusicDatabase.getDatabase(this)).execute();
                     }
                 } else {
                     finish();
@@ -137,12 +146,7 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
         }
     }
 
-    private void insertRoom(AudioModel audioModel) {
-        MusicRepository mReponsitory = new MusicRepository(getApplication());
-        mReponsitory.insert(audioModel);
-    }
-
-    private void getMusic() {
+    private void getMusic(MusicDao musicDao) {
         ContentResolver contentResolver = getContentResolver();
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor songCursor = contentResolver.query(songUri, null, null, null, null);
@@ -160,8 +164,29 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
                 Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, ur);
                 String albumId = songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
 
-                insertRoom(new AudioModel(String.valueOf(trackUri),currentTitle, currentDuration, albumId, nameAlbum));
+                musicDao.insert(new AudioModel(String.valueOf(trackUri), currentTitle, currentDuration, albumId, nameAlbum));
             } while (songCursor.moveToNext());
         }
+    }
+
+    private class InsertAsync extends AsyncTask<Void, Void, Void> {
+        private final MusicDao mDao;
+
+        private InsertAsync(MusicDatabase db) {
+            this.mDao = db.musicDao();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mDao.deleteAll();
+            getMusic(mDao);
+            return null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

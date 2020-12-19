@@ -10,19 +10,18 @@ import java.util.List;
 
 public class FavouriteRepository {
     private FavouriteDao mFavouriteDao;
-    private LiveData<List<FavouriteModel>> mAllFavourite;
 
     public FavouriteRepository(Context context) {
         MusicDatabase db = MusicDatabase.getDatabase(context);
         mFavouriteDao = db.favouriteDao();
     }
 
-    public LiveData<List<FavouriteModel>> getFavourite() {
-        return mAllFavourite;
+    public LiveData<List<FavouriteModel>> getFavourite(int id) {
+        return mFavouriteDao.getFavourite(id);
     }
 
-    public LiveData<List<FavouriteModel>> getAllFavourite(String idAlbum) {
-        return mFavouriteDao.getAllFavourite(idAlbum);
+    public LiveData<Integer> getCountFavourite(int idplaylist) {
+        return mFavouriteDao.getCountFavourite(idplaylist);
     }
 
     public void insertFavourite(FavouriteModel favouriteModel) {

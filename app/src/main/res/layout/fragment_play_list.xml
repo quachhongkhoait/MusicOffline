@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".ui.fragment.library.playlist.PlayListFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".ui.fragment.library.playlist.PlayListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
-            android:layout_width="match_parent"
+        android:id="@+id/mRltBack"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <TextView
+            android:id="@+id/mNameList"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/background">
-        <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/linnertoolbar"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Play List"
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
-           <LinearLayout
-                   android:orientation="horizontal"
-                   android:layout_width="match_parent"
-                   android:layout_height="59dp">
-               <androidx.appcompat.widget.Toolbar
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:background="#00000000">
+        <ImageView
+            android:id="@+id/mIVBack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:src="@drawable/ic_back" />
 
-                   <ImageView
-                           android:layout_width="wrap_content"
-                           android:layout_height="match_parent"
-                           android:src="@drawable/ic_back"/>
-                   <TextView
-                           android:textSize="24sp"
-                           android:textColor="#FFFFFF"
-                           android:gravity="center"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:text="Playlist"/>
-               </androidx.appcompat.widget.Toolbar>
-           </LinearLayout>
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#807B7B"/>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/mIVAddList"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:src="@drawable/ic_playlist_add" />
     </RelativeLayout>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mReCyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/mRltBack" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/mTVNullPlayList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Không có PlayList nào"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+</RelativeLayout>

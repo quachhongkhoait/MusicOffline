@@ -14,10 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cj.musicoffline.R;
+import com.cj.musicoffline.eventbuss.ChangeFragment;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.model.FavouriteModel;
+import com.cj.musicoffline.ui.fragment.library.playlist.PlayListFragment;
 import com.cj.musicoffline.viewmodel.ShareViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class ShowBottomSheetDialog extends BottomSheetDialogFragment implements View.OnClickListener {
     private View mView;
@@ -26,17 +30,17 @@ public class ShowBottomSheetDialog extends BottomSheetDialogFragment implements 
     private AudioModel audioModel;
     private String checkFarvorite;
     private ShareViewModel mModel;
-    private String idFavourite;
+    private int idFavourite;
     private int idDelete;
 
-    public ShowBottomSheetDialog(AudioModel audioModel, String checkFarvorite, ShareViewModel mModel, String idFavourite) {
+    public ShowBottomSheetDialog(AudioModel audioModel, String checkFarvorite, ShareViewModel mModel, int idFavourite) {
         this.audioModel = audioModel;
         this.checkFarvorite = checkFarvorite;
         this.mModel = mModel;
         this.idFavourite = idFavourite;
     }
 
-    public void addInFavourite(AudioModel audioModel, String checkFarvorite, ShareViewModel mModel, String idFavourite, int idDelete) {
+    public void addInFavourite(AudioModel audioModel, String checkFarvorite, ShareViewModel mModel, int idFavourite, int idDelete) {
         this.audioModel = audioModel;
         this.checkFarvorite = checkFarvorite;
         this.mModel = mModel;
@@ -93,6 +97,8 @@ public class ShowBottomSheetDialog extends BottomSheetDialogFragment implements 
                 updateFavourite();
                 break;
             case R.id.tvAddSong:
+                EventBus.getDefault().post(new ChangeFragment(new PlayListFragment()));
+                PlayListFragment.isInsert = true;
                 break;
             case R.id.tvAddDeleteSong:
                 Toast.makeText(getActivity(), "tvAddDeleteSong", Toast.LENGTH_SHORT).show();
@@ -135,11 +141,11 @@ public class ShowBottomSheetDialog extends BottomSheetDialogFragment implements 
         this.mModel = mModel;
     }
 
-    public String getIdFavourite() {
+    public int getIdFavourite() {
         return idFavourite;
     }
 
-    public void setIdFavourite(String idFavourite) {
+    public void setIdFavourite(int idFavourite) {
         this.idFavourite = idFavourite;
     }
 

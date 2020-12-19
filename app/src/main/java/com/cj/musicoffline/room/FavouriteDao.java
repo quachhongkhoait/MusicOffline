@@ -15,8 +15,8 @@ import java.util.List;
 
 @Dao
 public interface FavouriteDao {
-    @Query("SELECT * FROM favourite")
-    LiveData<List<FavouriteModel>> getFavourite();
+    @Query("SELECT * FROM favourite WHERE id = :id")
+    LiveData<List<FavouriteModel>> getFavourite(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFavourite(FavouriteModel favouriteModel);
@@ -24,6 +24,6 @@ public interface FavouriteDao {
     @Query("DELETE FROM favourite WHERE id = :id")
     void deleteFavourite(int id);
 
-    @Query("SELECT * FROM favourite WHERE idAlbum = :id")
-    LiveData<List<FavouriteModel>> getAllFavourite(String id);
+    @Query("SELECT COUNT(idplaylist) FROM favourite WHERE idplaylist = :id")
+    LiveData<Integer> getCountFavourite(int id);
 }

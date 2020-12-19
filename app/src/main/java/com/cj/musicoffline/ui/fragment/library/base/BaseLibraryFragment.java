@@ -6,20 +6,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.eventbuss.ChangeFragment;
 import com.cj.musicoffline.itf.OnCurrentFragmentListener;
 import com.cj.musicoffline.ui.fragment.library.LibraryFragment;
-import com.cj.musicoffline.ui.fragment.library.songs.SongsFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -70,12 +66,10 @@ public class BaseLibraryFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        Log.d("nnn", "onDestroy: ");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ChangeFragment(ChangeFragment cf) {
-//        Toast.makeText(getActivity(), "aaaaaaaa", Toast.LENGTH_SHORT).show();
         replaceFragment(cf.getFm(), true);
     }
 }

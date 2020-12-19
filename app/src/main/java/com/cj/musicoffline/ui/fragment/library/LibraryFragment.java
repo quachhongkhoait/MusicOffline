@@ -71,7 +71,7 @@ public class LibraryFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.mSongs:
                 EventBus.getDefault().post(new ChangeFragment(new SongsFragment()));
                 break;
@@ -79,7 +79,7 @@ public class LibraryFragment extends Fragment implements View.OnClickListener {
                 EventBus.getDefault().post(new ChangeFragment(new AlbumFragment()));
                 break;
             case R.id.mPlaylist:
-                EventBus.getDefault().post(new ChangeFragment(new PlayListFragment()));
+                EventBus.getDefault().post(new ChangeFragment(new PlayListFragment(), true));
                 break;
             case R.id.mFavourite:
                 EventBus.getDefault().post(new ChangeFragment(new FavouriteFragment()));

@@ -48,7 +48,7 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.ViewHolder
     public AdapterSearch.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.viewholder_music, parent, false);
-        AdapterSearch.ViewHolder viewHolder = new AdapterSearch.ViewHolder(view);
+        ViewHolder viewHolder = new AdapterSearch.ViewHolder(view);
         return viewHolder;
     }
 

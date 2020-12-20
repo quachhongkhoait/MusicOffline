@@ -2,7 +2,6 @@ package com.cj.musicoffline.ui.fragment.library.playlist;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cj.musicoffline.R;
-import com.cj.musicoffline.model.PlayList;
 import com.cj.musicoffline.model.PlayListModel;
 import com.cj.musicoffline.viewmodel.ShareViewModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.text.ParsePosition;
 import java.util.List;
 
 public class AdapterPlayList extends RecyclerView.Adapter<AdapterPlayList.ViewHolder> {

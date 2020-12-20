@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import com.cj.musicoffline.R;
 import com.cj.musicoffline.app.App;
 import com.cj.musicoffline.eventbuss.BackFragment;
 import com.cj.musicoffline.model.FavouriteModel;
-import com.cj.musicoffline.model.PlayList;
 import com.cj.musicoffline.model.PlayListModel;
 import com.cj.musicoffline.ui.fragment.library.dialog.CustomDialog;
 import com.cj.musicoffline.viewmodel.ShareViewModel;

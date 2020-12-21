@@ -89,7 +89,7 @@ public class InfoFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateInfo(SendInfo sendInfo) {
-        if (sendInfo != null) {g
+        if (sendInfo != null) {
             mTvTitle.setText(sendInfo.getTitle());
             Bitmap bitmap = BitmapFactory.decodeFile(HandlingMusic.getCoverArtPath(Long.parseLong(sendInfo.getImage()), getContext()));
             if (bitmap == null) {

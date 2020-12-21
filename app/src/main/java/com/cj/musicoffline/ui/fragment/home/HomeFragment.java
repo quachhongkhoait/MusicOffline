@@ -55,12 +55,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void getMusicNew() {
-        arrayList.add(new AudioModel("content://media/external/audio/media/2325", "luan hoi co phong loi viet lee phu quy nhac co phong thu gian ru ngu 0R4zCXMByoK-gucZLRg", "249234", "1", "music"));
-        arrayList.add(new AudioModel("content://media/external/audio/media/103363", "N咊 Duy麩", "335024", "3", "N咊 Duy麩 (Single)"));
-        arrayList.add(new AudioModel("content://media/external/audio/media/2326", "mot giac mong xua co phong loi viet lee phu quy nhac co phong em diu ru ngu 4-pcBXMByoK-gucZ93gL", "177084", "1", "music"));
-        arrayList.add(new AudioModel("content://media/external/audio/media/37896", "Không Thuộc Về", "104315", "2", "NhacCuaTui.com"));
-        arrayList.add(new AudioModel("content://media/external/audio/media/31465", "y2mate.com - [TIKTOK] PHÁ KÉN _ Ca Khúc Chủ Đề Đấu La Đại Lục - [Cover lời Việt] - Tiểu Muội Màn Thầu", "210887", "1", "music"));
-        arrayList.add(new AudioModel("content://media/external/audio/media/2332", "lu khach qua thoi gian remix tuan nguyen thieu gia x phong tung 1503364", "198922", "1", "music"));
+        arrayList.add(new AudioModel("content://media/external/audio/media/2332", "lu khach qua thoi gian remix tuan nguyen thieu gia x phong tung 1503364", "198922", "1", "music","a","a"));
+        arrayList.add(new AudioModel("content://media/external/audio/media/2332", "lu khach qua thoi gian remix tuan nguyen thieu gia x phong tung 1503364", "198922", "1", "music","a","a"));
+        arrayList.add(new AudioModel("content://media/external/audio/media/2332", "lu khach qua thoi gian remix tuan nguyen thieu gia x phong tung 1503364", "198922", "1", "music","a","a"));
+        arrayList.add(new AudioModel("content://media/external/audio/media/2332", "lu khach qua thoi gian remix tuan nguyen thieu gia x phong tung 1503364", "198922", "1", "music","a","a"));
+        arrayList.add(new AudioModel("content://media/external/audio/media/2332", "lu khach qua thoi gian remix tuan nguyen thieu gia x phong tung 1503364", "198922", "1", "music","a","a"));
+        arrayList.add(new AudioModel("content://media/external/audio/media/2332", "lu khach qua thoi gian remix tuan nguyen thieu gia x phong tung 1503364", "198922", "1", "music","a","a"));
 
     }
 

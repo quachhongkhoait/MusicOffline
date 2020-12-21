@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.cj.musicoffline.R;
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
             int songDuration = songCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             int songID = songCursor.getColumnIndex(MediaStore.Audio.Media._ID);
             int idw = songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
+            int idpath = songCursor.getColumnIndex(MediaStore.MediaColumns.DATA);
             do {
                 String nameAlbum = songCursor.getString(idw);
                 String currentTitle = songCursor.getString(songTitle);
@@ -162,8 +164,16 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
                 Long ur = songCursor.getLong(songID);
                 Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, ur);
                 String albumId = songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
+                //path + lyrics
+                String path = songCursor.getString(idpath);
+                String pathLyrics = "defaul";
+                String lyrics = path.substring(path.lastIndexOf('-') + 1).replace(".mp3", "");
+                if (path.contains("/")) {
+                    pathLyrics = path.substring(0, path.lastIndexOf('/'));
+                }
+                Log.d("nnn", pathLyrics + " it: " + lyrics);
 
-                musicDao.insert(new AudioModel(String.valueOf(trackUri), currentTitle, currentDuration, albumId, nameAlbum));
+                musicDao.insert(new AudioModel(String.valueOf(trackUri), currentTitle, currentDuration, albumId, nameAlbum, lyrics, pathLyrics));
             } while (songCursor.moveToNext());
         }
     }

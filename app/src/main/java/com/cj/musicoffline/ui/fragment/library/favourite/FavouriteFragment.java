@@ -31,8 +31,6 @@ import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.model.FavouriteModel;
 import com.cj.musicoffline.service.PlayMusicService;
 import com.cj.musicoffline.ui.fragment.library.dialog.ShowBottomSheetDialog;
-import com.cj.musicoffline.ui.fragment.library.songs.AdapterAudio;
-import com.cj.musicoffline.ui.fragment.library.songs.SongsFragment;
 import com.cj.musicoffline.ui.playmusic.PlayActivity;
 import com.cj.musicoffline.utils.CheckService;
 import com.cj.musicoffline.utils.Constain;

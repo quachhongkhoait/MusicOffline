@@ -17,21 +17,43 @@ public class AudioModel implements Parcelable {
     private String duration;
     private String idAlbum;
     private String nameAlbum;
+    private String lyrics;
+    private String pathLyrics;
 
-    public AudioModel(@NonNull String url, String title, String duration, String idAlbum, String nameAlbum) {
+    public AudioModel(@NonNull String url, String title, String duration, String idAlbum, String nameAlbum, String lyrics, String pathLyrics) {
         this.url = url;
         this.title = title;
         this.duration = duration;
         this.idAlbum = idAlbum;
         this.nameAlbum = nameAlbum;
+        this.lyrics = lyrics;
+        this.pathLyrics = pathLyrics;
     }
 
     protected AudioModel(Parcel in) {
+        url = in.readString();
         title = in.readString();
         duration = in.readString();
-        url = in.readString();
         idAlbum = in.readString();
         nameAlbum = in.readString();
+        lyrics = in.readString();
+        pathLyrics = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(url);
+        dest.writeString(title);
+        dest.writeString(duration);
+        dest.writeString(idAlbum);
+        dest.writeString(nameAlbum);
+        dest.writeString(lyrics);
+        dest.writeString(pathLyrics);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<AudioModel> CREATOR = new Creator<AudioModel>() {
@@ -45,6 +67,15 @@ public class AudioModel implements Parcelable {
             return new AudioModel[size];
         }
     };
+
+    @NonNull
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(@NonNull String url) {
+        this.url = url;
+    }
 
     public String getTitle() {
         return title;
@@ -60,14 +91,6 @@ public class AudioModel implements Parcelable {
 
     public void setDuration(String duration) {
         this.duration = duration;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getIdAlbum() {
@@ -86,21 +109,19 @@ public class AudioModel implements Parcelable {
         this.nameAlbum = nameAlbum;
     }
 
-    public static Creator<AudioModel> getCREATOR() {
-        return CREATOR;
+    public String getLyrics() {
+        return lyrics;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(title);
-        parcel.writeString(duration);
-        parcel.writeString(url);
-        parcel.writeString(idAlbum);
-        parcel.writeString(nameAlbum);
+    public String getPathLyrics() {
+        return pathLyrics;
+    }
+
+    public void setPathLyrics(String pathLyrics) {
+        this.pathLyrics = pathLyrics;
     }
 }

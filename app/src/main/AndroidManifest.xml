@@ -18,11 +18,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicOffline">
-        <activity android:name=".ui.searchdetail.DetailSearchActivity"/>
-        <activity android:name=".ui.playlist.PlayListActivity" />
-        <activity android:name=".ui.playmusic.PlayActivity" />
-        <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.main.SplashActivity">
+        <activity android:name=".ui.searchdetail.DetailSearchActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.playlist.PlayListActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.playmusic.PlayActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.main.MainActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.main.SplashActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,9 +35,11 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".broadcast.NotificationActionService" />
+        <receiver android:name=".broadcast.NotificationActionService"
+                android:screenOrientation="portrait"/>
 
-        <service android:name=".service.PlayMusicService" />
+        <service android:name=".service.PlayMusicService"
+                android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

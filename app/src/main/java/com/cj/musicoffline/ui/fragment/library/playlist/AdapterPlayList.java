@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cj.musicoffline.R;
@@ -44,8 +46,7 @@ public class AdapterPlayList extends RecyclerView.Adapter<AdapterPlayList.ViewHo
     public AdapterPlayList.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.viewholder_playlist, parent, false);
-        AdapterPlayList.ViewHolder viewHolder = new AdapterPlayList.ViewHolder(view);
-        return viewHolder;
+        return new AdapterPlayList.ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -55,7 +56,9 @@ public class AdapterPlayList extends RecyclerView.Adapter<AdapterPlayList.ViewHo
         holder.mTvCountSongs.setText(mList.get(position).getCount() + " bài");
 
         holder.mRIVPlayList.setImageResource(R.drawable.bg_musicerror);
-        holder.mLLClick.setOnClickListener(view -> onClickItemMusicListener.onClickOpen(position, mList.get(position).getId()));
+        holder.mLLClick.setOnClickListener(view -> {
+            onClickItemMusicListener.onClickOpen(position, mList.get(position).getId());
+        });
         holder.mIVDelete.setOnClickListener(v -> onClickItemMusicListener.onClickDelete(position, mList.get(position).getId()));
     }
 

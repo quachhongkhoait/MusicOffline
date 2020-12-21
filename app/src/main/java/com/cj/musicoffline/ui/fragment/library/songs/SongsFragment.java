@@ -26,10 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.app.App;
+import com.cj.musicoffline.eventbuss.BackFragment;
 import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.eventbuss.SendStartAudio;
 import com.cj.musicoffline.model.AudioModel;
@@ -58,6 +60,7 @@ public class SongsFragment extends Fragment {
     RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ImageView mIVBack;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +81,7 @@ public class SongsFragment extends Fragment {
     private void init(View view) {
         mProgressBar = view.findViewById(R.id.mPB);
         mRecyclerView = view.findViewById(R.id.mReCyclerView);
+        mIVBack = view.findViewById(R.id.mIVBack);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -87,6 +91,8 @@ public class SongsFragment extends Fragment {
         adapter.setOnClickItemMusicListener(position -> {
             PlayMusic.StartMusic(arrayList, getActivity(), position);
         });
+
+        mIVBack.setOnClickListener(v -> EventBus.getDefault().post(new BackFragment()));
     }
 
     public void showBottomSheetDialog(AudioModel model, String check) {

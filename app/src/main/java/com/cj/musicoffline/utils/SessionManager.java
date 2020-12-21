@@ -11,6 +11,7 @@ public class SessionManager {
     private static final String KEY_SAVE_CHECK = "key_save_check";
     private static final String KEY_LOGIN = "islogin";
     private static final String KEY_ROLE = "key_role";
+    private static final String KEY_UPDATE_PLAYLIST = "key_update_playlist";
 
 
     private static SessionManager sInstance;
@@ -30,6 +31,15 @@ public class SessionManager {
 
     public void init(Context context) {
         sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
+    //insert favourite
+    public void setKeyUpdatePlaylist(Boolean b) {
+        sharedPref.edit().putBoolean(KEY_UPDATE_PLAYLIST, b).apply();
+    }
+
+    public Boolean getKeyUpdatePlaylist() {
+        return sharedPref.getBoolean(KEY_UPDATE_PLAYLIST, false);
     }
 
     //insert favourite

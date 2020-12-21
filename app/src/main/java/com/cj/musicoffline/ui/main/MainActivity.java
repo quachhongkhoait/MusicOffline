@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements OnCurrentFragment
                 String nameAlbum = songCursor.getString(idw);
                 String currentTitle = songCursor.getString(songTitle);
                 String currentDuration = songCursor.getString(songDuration);
-//                String currentDuration = HandlingMusic.convertDuration(songCursor.getLong(songCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
                 Long ur = songCursor.getLong(songID);
                 Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, ur);
                 String albumId = songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));

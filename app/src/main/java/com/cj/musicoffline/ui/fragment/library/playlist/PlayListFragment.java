@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.cj.musicoffline.eventbuss.BackFragment;
 import com.cj.musicoffline.model.FavouriteModel;
 import com.cj.musicoffline.model.PlayListModel;
 import com.cj.musicoffline.ui.fragment.library.dialog.CustomDialog;
+import com.cj.musicoffline.utils.SessionManager;
 import com.cj.musicoffline.viewmodel.ShareViewModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,24 +69,32 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getPlayList() {
+        SessionManager.getInstance().setKeyUpdatePlaylist(true);
         mViewModel.getPlayList().observe(getViewLifecycleOwner(), playListModels -> {
             arrayList.clear();
             arrayList.addAll(playListModels);
             mAdapter.notifyDataSetChanged();
-            for (PlayListModel it : playListModels) {
-                cout = 0;
-                mViewModel.getCountFavourite(it.getId()).observe(getViewLifecycleOwner(), integer -> {
-                    cout = integer;
-                    mViewModel.updatePlayList(it.getId(), cout);
-                });
-                mAdapter.notifyDataSetChanged();
+            if (SessionManager.getInstance().getKeyUpdatePlaylist()) {
+                SessionManager.getInstance().setKeyUpdatePlaylist(false);
+                for (PlayListModel it : playListModels) {
+                    mViewModel.getCountFavourite(it.getId()).observe(getViewLifecycleOwner(), integer -> {
+                        mViewModel.updatePlayList(it.getId(), integer);
+                    });
+                    mAdapter.notifyDataSetChanged();
+                }
             }
             if (playListModels.size() == 0) {
+                mAdapter.notifyDataSetChanged();
                 mTVNullPlayList.setVisibility(View.VISIBLE);
             } else {
                 mTVNullPlayList.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void setUp(View view) {
@@ -102,8 +112,8 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
         mAdapter = new AdapterPlayList(getActivity(), arrayList, mViewModel, new AdapterPlayList.OnClickItemMusicListener() {
             @Override
             public void onClickOpen(int pos, int id) {
-                Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 if (isInsert) {
+                    Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                     isInsert = false;
                     EventBus.getDefault().post(new BackFragment());
                     mViewModel.insertFavourite(new FavouriteModel(0, "content://media/external/audio/media/31318", id));

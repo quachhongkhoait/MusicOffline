@@ -18,12 +18,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.app.App;
+import com.cj.musicoffline.eventbuss.BackFragment;
 import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.model.FavouriteModel;
@@ -51,6 +53,7 @@ public class FavouriteFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private ShowBottomSheetDialog showBottomSheetDialog;
     private TextView mTVNullSongs;
+    private ImageView mIVBack;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +71,7 @@ public class FavouriteFragment extends Fragment {
 
     private void setUp(View view) {
         mRecyclerView = view.findViewById(R.id.mReCyclerView);
+        mIVBack = view.findViewById(R.id.mIVBack);
         mTVNullSongs = view.findViewById(R.id.mTVNullSongs);
         mTVNullSongs.setVisibility(View.GONE);
 
@@ -93,9 +97,12 @@ public class FavouriteFragment extends Fragment {
             }
         });
         mRecyclerView.setAdapter(adapter);
-
         //bottomsheet
         showBottomSheetDialog = new ShowBottomSheetDialog();
+
+        mIVBack.setOnClickListener(v -> {
+            EventBus.getDefault().post(new BackFragment());
+        });
     }
 
     private void getAllFavourite() {

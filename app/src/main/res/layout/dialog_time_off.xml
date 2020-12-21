@@ -2,26 +2,158 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:layout_height="wrap_content"
+        android:background="@drawable/curve_time_off"
         app:cardCornerRadius="@dimen/_20sdp">
 
     <RelativeLayout
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/curve_shap"
+            android:background="#00FFFFFF"
             android:padding="@dimen/_15sdp">
 
-        <TextView
-                android:id="@+id/mTVTitle"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="HẸN GIỜ TẮT"
-                android:textColor="#000000"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:gravity="center"
+                    android:text="HẸN GIỜ TẮT"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            <Switch
+                    android:id="@+id/sW_Off"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_21sdp"
+                    android:switchMinWidth="@dimen/_50sdp"
+                    android:thumb="@drawable/switch_thumb_selector"
+                    android:track="@drawable/switch_track_selector" />
+
+            <LinearLayout
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_35sdp"
+                    android:orientation="horizontal">
+
+                <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RadioButton
+                            android:id="@+id/rB_15"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text="15'"
+                            android:textSize="@dimen/_12sdp" />
+                </RelativeLayout>
+
+                <TextView
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:background="#000" />
+
+                <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RadioButton
+                            android:id="@+id/rB_30"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text="30'"
+                            android:textSize="@dimen/_12sdp" />
+                </RelativeLayout>
+
+                <TextView
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:background="#000" />
+
+                <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RadioButton
+                            android:id="@+id/rB_60"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:text="60'"
+                            android:textSize="@dimen/_12sdp" />
+                </RelativeLayout>
+
+                <TextView
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:background="#000" />
+
+                <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RadioButton
+                            android:id="@+id/rB_120"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:text="120'"
+                            android:textSize="@dimen/_12sdp" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <EditText
+                    android:id="@+id/edt_time_off"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:background="null"
+                    android:drawableLeft="@drawable/ic_time_off"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:hint="Nhập số phút" />
+
+            <TextView
+                    android:id="@+id/tVCloseOff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center_horizontal"
+                    android:text="ĐÓNG"
+                    android:textColor="#FF0099"
+                    android:textSize="@dimen/_24sdp" />
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

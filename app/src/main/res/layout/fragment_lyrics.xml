@@ -1,70 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/_10sdp"
     tools:context=".ui.playmusic.fragment.LyricsFragment">
 
-    <TextView
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Been two years, our memories are blurred
-Hadn't heard your voice, no, not a word
-But still they, they talk about the things we were
-They talk about us
-But I don't know the things that you have heard
-She's dancing on your feet
-With our song on repeat
-She painted every role of us
-She's taking off her clothes
-In the bed you kept me warm
-Heard she's everything I never was
-No, I'm not her, no
-Never will
-Never gonna move like her, move like
-I'm not her, no
-Never will
-Never gonna look like her, be like
-I'm not her
-I'm not her, no
-At least that's what I've heard
-Me, myself, just stumble on the glue
-The thing I thought was missing wasn't you
-And now I'm no longer scared to meet the night
-I'm doing alright
-Me, myself, we started something new
-She's dancing on your feet
-With our song on repeat
-She painted every role of us
-She's taking off her clothes
-In the bed you kept me warm
-Heard she's everything I never was
-No, I'm not her, no
-Never will
-Never gonna move like her, move like
-I'm not her, no
-Never will
-Never gonna look like her, be like
-I'm not her
-I'm not her
-At least that's what I've heard
-Been told that she's the opposite
-I kinda like the sound of it
-And there's no one like me
-And that makes it easier
-No, I'm not her, no
-Never will
-Never gonna move like her, move like
-I'm not her, no
-Never will
-Never gonna look like her, be like
-I'm not her
-Say, I'm not her
-No, I'm not her, oh, and I'll never be
-At least that's what I've heard"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        android:layout_height="match_parent" />
 
-</androidx.core.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/mTVNullLyrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Không có lời bài hát"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</RelativeLayout>

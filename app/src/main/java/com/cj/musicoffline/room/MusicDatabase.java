@@ -18,7 +18,7 @@ import com.cj.musicoffline.utils.PopulateDbAsync;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {AudioModel.class, FavouriteModel.class, PlayListModel.class,SearchContent.class}, version = 4, exportSchema = false)
+@Database(entities = {AudioModel.class, FavouriteModel.class, PlayListModel.class, SearchContent.class}, version = 5, exportSchema = false)
 public abstract class MusicDatabase extends RoomDatabase {
     public abstract MusicDao musicDao();
 

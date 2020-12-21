@@ -21,11 +21,12 @@ import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.SendLyrics;
 import com.cj.musicoffline.eventbuss.SendService;
 import com.cj.musicoffline.eventbuss.SendUI;
+import com.cj.musicoffline.eventbuss.UpdateVolum;
 import com.cj.musicoffline.eventbuss.UpdateSeekBar;
 import com.cj.musicoffline.itf.Playable;
 import com.cj.musicoffline.model.AudioModel;
-import com.cj.musicoffline.ui.main.MainActivity;
 import com.cj.musicoffline.utils.CreateNotification;
+import com.cj.musicoffline.utils.SessionManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -194,6 +195,14 @@ public class PlayMusicService extends Service implements Playable {
             onMusicPlay();
         } else {
             onMusicPause();
+        }
+    }
+    @Subscribe
+    public void updateVolum(UpdateVolum updateMediaPlay){
+        if (SessionManager.getInstance().getKeyUpdateVolume()){//true
+            mediaPlayer.setVolume(0,0);
+        }else {
+            mediaPlayer.setVolume(1,1);
         }
     }
 

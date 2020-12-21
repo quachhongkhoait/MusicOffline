@@ -12,6 +12,7 @@ public class SessionManager {
     private static final String KEY_LOGIN = "islogin";
     private static final String KEY_ROLE = "key_role";
     private static final String KEY_UPDATE_PLAYLIST = "key_update_playlist";
+    private static final String KEY_UPDATE_VOLUME = "key_update_volum";
 
 
     private static SessionManager sInstance;
@@ -31,6 +32,15 @@ public class SessionManager {
 
     public void init(Context context) {
         sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
+    //change volume
+    public void setKeyUpdateVolume(Boolean b) {
+        sharedPref.edit().putBoolean(KEY_UPDATE_VOLUME, b).apply();
+    }
+
+    public Boolean getKeyUpdateVolume() {
+        return sharedPref.getBoolean(KEY_UPDATE_VOLUME, true);
     }
 
     //insert favourite

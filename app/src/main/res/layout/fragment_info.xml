@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.playmusic.fragment.InfoFragment">
 
     <TextView
-        android:paddingEnd="@dimen/_20sdp"
-        android:paddingStart="@dimen/_20sdp"
         android:id="@+id/mTvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
         android:text="Tên bài hát"
         android:textColor="#fff"
         android:textSize="25sp" />
@@ -29,5 +29,25 @@
         app:riv_border_color="#FF000000"
         app:riv_border_width="0.01dp"
         app:riv_corner_radius="@dimen/_30sdp" />
+
+    <ImageView
+        android:layout_marginStart="@dimen/_20sdp"
+        android:id="@+id/mIVVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/ic_volume_up" />
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:id="@+id/mIVRepeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/ic_repeat_off" />
 
 </RelativeLayout>

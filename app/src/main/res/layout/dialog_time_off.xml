@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_50sdp"
-                    android:background="null"
+                    android:background="@null"
                     android:drawableLeft="@drawable/ic_time_off"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="Nhập số phút" />

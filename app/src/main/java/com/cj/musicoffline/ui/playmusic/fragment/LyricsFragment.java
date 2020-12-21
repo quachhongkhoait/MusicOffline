@@ -58,17 +58,19 @@ public class LyricsFragment extends Fragment {
 //        File file = new File("/storage/emulated/0/bluetooth/Lyrics/", "1079373359");
         File file = new File(path + "/Lyrics/", id);
         StringBuilder text = new StringBuilder();
-        if (text.toString().equals("")) {
-            return;
-        }
-        Log.d("nnn", " StringBuilder: " + text.toString());
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
+            if ("".equals(br.readLine())) {
+                return;
+            }
+            Log.d("nnn", "mLyric: " + br.read());
 
             while ((line = br.readLine()) != null) {
-                String lyric = line.replaceAll(line.substring('[', ']'), "");
+
+//                String lyric = line.replaceAll(line.substring(0, 10), "");
+                String lyric = line.substring(line.lastIndexOf(']') + 1);
 //                String lyric = line.substring(10);
                 if (lyric.equals("")) {
                     lyric = "...";

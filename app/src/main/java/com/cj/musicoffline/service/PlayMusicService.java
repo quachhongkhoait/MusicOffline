@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.eventbuss.PlayAudio;
 import com.cj.musicoffline.eventbuss.SendInfo;
+import com.cj.musicoffline.eventbuss.SendLyrics;
 import com.cj.musicoffline.eventbuss.SendService;
 import com.cj.musicoffline.eventbuss.SendUI;
 import com.cj.musicoffline.eventbuss.UpdateSeekBar;
@@ -76,7 +77,7 @@ public class PlayMusicService extends Service implements Playable {
         }
         Uri uri = Uri.parse(mList.get(pos).getUrl());//"content://media/external/audio/media/25"
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-        try{
+        try {
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
@@ -90,7 +91,7 @@ public class PlayMusicService extends Service implements Playable {
             });
             CreateNotification.createNotification(this, R.drawable.ic_pause, pos, mList);
             startForeground(1, CreateNotification.notification);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "Bài hát không tồn tại", Toast.LENGTH_SHORT).show();
         }
     }
@@ -143,6 +144,7 @@ public class PlayMusicService extends Service implements Playable {
         EventBus.getDefault().post(new SendUI(position, "play"));
         EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
         EventBus.getDefault().post(new UpdateSeekBar(mediaPlayer));
+        EventBus.getDefault().post(new SendLyrics(mList.get(position).getLyrics(), mList.get(position).getPathLyrics()));
     }
 
     @Override
@@ -179,6 +181,7 @@ public class PlayMusicService extends Service implements Playable {
         EventBus.getDefault().post(new SendUI(position, "play"));
         EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
         EventBus.getDefault().post(new UpdateSeekBar(mediaPlayer));
+        EventBus.getDefault().post(new SendLyrics(mList.get(position).getLyrics(), mList.get(position).getPathLyrics()));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

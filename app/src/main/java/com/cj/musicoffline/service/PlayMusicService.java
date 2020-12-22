@@ -21,11 +21,12 @@ import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.SendLyrics;
 import com.cj.musicoffline.eventbuss.SendService;
 import com.cj.musicoffline.eventbuss.SendUI;
+import com.cj.musicoffline.eventbuss.UpdateVolum;
 import com.cj.musicoffline.eventbuss.UpdateSeekBar;
 import com.cj.musicoffline.itf.Playable;
 import com.cj.musicoffline.model.AudioModel;
-import com.cj.musicoffline.ui.main.MainActivity;
 import com.cj.musicoffline.utils.CreateNotification;
+import com.cj.musicoffline.utils.SessionManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -79,14 +80,11 @@ public class PlayMusicService extends Service implements Playable {
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
         try {
             mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    if (pos >= (mList.size() - 1)) {
-                        mediaPlayer.stop();
-                    } else {
-                        onMusicNext();
-                    }
+            mediaPlayer.setOnCompletionListener(mediaPlayer -> {
+                if (pos >= (mList.size() - 1)) {
+                    mediaPlayer.stop();
+                } else {
+                    onMusicNext();
                 }
             });
             CreateNotification.createNotification(this, R.drawable.ic_pause, pos, mList);
@@ -100,6 +98,11 @@ public class PlayMusicService extends Service implements Playable {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        if (SessionManager.getInstance().getKeyUpdateVolume()) {//true
+            mediaPlayer.setVolume(0, 0);
+        } else {
+            mediaPlayer.setVolume(1, 1);
+        }
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -194,6 +197,15 @@ public class PlayMusicService extends Service implements Playable {
             onMusicPlay();
         } else {
             onMusicPause();
+        }
+    }
+
+    @Subscribe
+    public void updateVolum(UpdateVolum updateMediaPlay) {
+        if (SessionManager.getInstance().getKeyUpdateVolume()) {//true
+            mediaPlayer.setVolume(0, 0);
+        } else {
+            mediaPlayer.setVolume(1, 1);
         }
     }
 

@@ -222,7 +222,6 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 timeOffDialog.show(getSupportFragmentManager(), Constain.keyDialogAlarm);
                 break;
             case R.id.mIVBack:
-                Toast.makeText(this, "Back nè", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }

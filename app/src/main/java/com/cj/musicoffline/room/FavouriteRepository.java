@@ -35,4 +35,9 @@ public class FavouriteRepository {
             mFavouriteDao.deleteFavourite(s);
         });
     }
+    public void deletePlayList(int idplaylist) {
+        MusicDatabase.databaseWriteExecutor.execute(() -> {
+            mFavouriteDao.deletePlayList(idplaylist);
+        });
+    }
 }

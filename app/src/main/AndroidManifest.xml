@@ -20,7 +20,7 @@
         android:theme="@style/Theme.MusicOffline">
         <activity android:name=".ui.searchdetail.DetailSearchActivity"
                 android:screenOrientation="portrait"/>
-        <activity android:name=".ui.playlist.PlayListActivity"
+        <activity android:name=".ui.playlist.PlayListDetailActivity"
                 android:screenOrientation="portrait"/>
         <activity android:name=".ui.playmusic.PlayActivity"
                 android:screenOrientation="portrait"/>

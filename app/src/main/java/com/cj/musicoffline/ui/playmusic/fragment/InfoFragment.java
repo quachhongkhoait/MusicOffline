@@ -8,16 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.eventbuss.SendInfo;
-import com.cj.musicoffline.eventbuss.SendUI;
+import com.cj.musicoffline.eventbuss.UpdateVolum;
 import com.cj.musicoffline.utils.HandlingMusic;
+import com.cj.musicoffline.utils.SessionManager;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,6 +28,7 @@ import org.greenrobot.eventbus.ThreadMode;
 public class InfoFragment extends Fragment {
     private TextView mTvTitle;
     private RoundedImageView mImgAlbum;
+    private ImageView mIVVolume, mIVRepeat;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,15 +49,42 @@ public class InfoFragment extends Fragment {
         if (getArguments() != null) {
             String title = getArguments().getString("title");
             String image = getArguments().getString("image");
-            if (!title.equals("")){
+            if (!title.equals("")) {
                 updateInfo(new SendInfo(title, image));
             }
         }
+        updateUIVolume();
     }
 
     private void setUp(View view) {
         mTvTitle = view.findViewById(R.id.mTvTitle);
         mImgAlbum = view.findViewById(R.id.mImgAlbum);
+        mIVRepeat = view.findViewById(R.id.mIVRepeat);
+        mIVVolume = view.findViewById(R.id.mIVVolume);
+
+        mIVRepeat.setOnClickListener(v -> {
+
+        });
+        mIVVolume.setOnClickListener(v -> {
+            boolean set = false;
+            if (SessionManager.getInstance().getKeyUpdateVolume()) {
+                set = false;
+                SessionManager.getInstance().setKeyUpdateVolume(set);
+            } else {
+                set = true;
+                SessionManager.getInstance().setKeyUpdateVolume(set);
+            }
+            EventBus.getDefault().post(new UpdateVolum(set));
+            updateUIVolume();
+        });
+    }
+
+    private void updateUIVolume() {
+        if (SessionManager.getInstance().getKeyUpdateVolume()) {
+            mIVVolume.setImageResource(R.drawable.ic_volume_off);
+        } else {
+            mIVVolume.setImageResource(R.drawable.ic_volume_up);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

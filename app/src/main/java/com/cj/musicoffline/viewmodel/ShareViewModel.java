@@ -70,6 +70,9 @@ public class ShareViewModel extends AndroidViewModel {
     public void deleteFavourite(int s) {
         mRepositoryFavourite.deleteFavourite(s);
     }
+    public void deletePlayListByIDPL(int idplaylist) {
+        mRepositoryFavourite.deletePlayList(idplaylist);
+    }
 
     public LiveData<Integer> getCountFavourite(int idplaylist) {
         return mRepositoryFavourite.getCountFavourite(idplaylist);

@@ -82,7 +82,9 @@ public class PlayMusicService extends Service implements Playable {
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(mediaPlayer -> {
                 if (pos >= (mList.size() - 1)) {
-                    mediaPlayer.stop();
+//                    mediaPlayer.stop();
+                    position = 0;
+                    onMusicPlay();
                 } else {
                     onMusicNext();
                 }
@@ -92,17 +94,17 @@ public class PlayMusicService extends Service implements Playable {
         } catch (Exception e) {
             Toast.makeText(this, "Bài hát không tồn tại", Toast.LENGTH_SHORT).show();
         }
+        if (SessionManager.getInstance().getKeyUpdateVolume()) {//true
+            mediaPlayer.setVolume(0, 0);
+        } else {
+            mediaPlayer.setVolume(1, 1);
+        }
     }
 
     private void initMediaPlayer() {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        if (SessionManager.getInstance().getKeyUpdateVolume()) {//true
-            mediaPlayer.setVolume(0, 0);
-        } else {
-            mediaPlayer.setVolume(1, 1);
-        }
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {

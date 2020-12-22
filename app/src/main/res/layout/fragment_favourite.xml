@@ -70,6 +70,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/btn_Favourite"
             android:layout_marginTop="@dimen/_10sdp" />
+
         <TextView
             android:id="@+id/mTVNullSongs"
             android:layout_centerInParent="true"
@@ -77,6 +78,6 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 </FrameLayout>

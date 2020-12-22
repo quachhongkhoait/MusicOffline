@@ -1,9 +1,9 @@
-package com.cj.musicoffline.ui.fragment.library.songs;
+package com.cj.musicoffline.ui.playlist;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,42 +12,34 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.model.AudioModel;
-import com.cj.musicoffline.ui.fragment.library.LibraryFragment;
-import com.cj.musicoffline.ui.fragment.library.dialog.ShowBottomSheetDialog;
+import com.cj.musicoffline.model.FavouriteModel;
+import com.cj.musicoffline.ui.fragment.library.favourite.AdapterFavourite;
 import com.cj.musicoffline.utils.HandlingMusic;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
-public class AdapterAudio extends RecyclerView.Adapter<AdapterAudio.ViewHolder> {
-    private final SongsFragment mSongsFragment;
 
-    public AdapterAudio(SongsFragment fragment) {
-        this.mSongsFragment = fragment;
-    }
+public class AdapterListDetail extends RecyclerView.Adapter<AdapterListDetail.ViewHolder> {
+    private List<AudioModel> mLvAudioModel;
+    private Context context;
+    private OnClickItemDetailListener onClickItemDetailListener;
 
-    interface OnClickItemMusicListener {
+    interface OnClickItemDetailListener {
         void onclickItem(int position);
+
+        void onclickDelete(int pos);
     }
 
-    private OnClickItemMusicListener onClickItemMusicListener;
-    Context mContext;
-    List<AudioModel> mLvAudioModel;
-
-
-    public AdapterAudio(Context context, List<AudioModel> items, SongsFragment songsFragment) {
-        this.mContext = context;
-        this.mLvAudioModel = items;
-        this.mSongsFragment = songsFragment;
+    public AdapterListDetail(List<AudioModel> mLvAudioModel, Context context, OnClickItemDetailListener onClickItemDetailListener) {
+        this.mLvAudioModel = mLvAudioModel;
+        this.context = context;
+        this.onClickItemDetailListener = onClickItemDetailListener;
     }
 
     @NonNull
@@ -55,37 +47,28 @@ public class AdapterAudio extends RecyclerView.Adapter<AdapterAudio.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.viewholder_music, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        AdapterListDetail.ViewHolder viewHolder = new AdapterListDetail.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.mTvTitle.setText(mLvAudioModel.get(position).getTitle());
         holder.mTvDuration.setText(HandlingMusic.createTimerLabel(Integer.parseInt(mLvAudioModel.get(position).getDuration())));
-        Bitmap bitmap = BitmapFactory.decodeFile(HandlingMusic.getCoverArtPath(Long.parseLong(mLvAudioModel.get(position).getIdAlbum()), mContext));
+        Bitmap bitmap = BitmapFactory.decodeFile(HandlingMusic.getCoverArtPath(Long.parseLong(mLvAudioModel.get(position).getIdAlbum()), context));
         if (bitmap == null) {
             holder.mImgAlbum.setImageResource(R.drawable.bg_musicerror);
         } else {
             holder.mImgAlbum.setImageBitmap(bitmap);
         }
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickItemMusicListener.onclickItem(position);
+        holder.mCardView.setOnClickListener(view -> onClickItemDetailListener.onclickItem(position));
+        holder.mRelaOption.setOnClickListener(v -> {
+            onClickItemDetailListener.onclickDelete(position);
+            if (mLvAudioModel.size() == 1) {
+                notifyDataSetChanged();
             }
         });
-        holder.mRelaOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSongsFragment.showBottomSheetDialog(mLvAudioModel.get(position), "add");
-            }
-        });
-
-    }
-
-    private void search(String s) {
-
+        holder.mCardView.setOnClickListener(view -> onClickItemDetailListener.onclickItem(position));
     }
 
     @Override
@@ -98,6 +81,7 @@ public class AdapterAudio extends RecyclerView.Adapter<AdapterAudio.ViewHolder> 
         RoundedImageView mImgAlbum;
         CardView mCardView;
         RelativeLayout mRelaOption;
+        ImageView mIVDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -106,10 +90,8 @@ public class AdapterAudio extends RecyclerView.Adapter<AdapterAudio.ViewHolder> 
             mImgAlbum = itemView.findViewById(R.id.imageAlbum);
             mCardView = itemView.findViewById(R.id.cardview);
             mRelaOption = itemView.findViewById(R.id.relaOption);
+            mIVDelete = itemView.findViewById(R.id.mIVDelete);
+            mIVDelete.setImageResource(R.drawable.ic_close_while);
         }
-    }
-
-    public void setOnClickItemMusicListener(OnClickItemMusicListener onClickItemMusicListener) {
-        this.onClickItemMusicListener = onClickItemMusicListener;
     }
 }

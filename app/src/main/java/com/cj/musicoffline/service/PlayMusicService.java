@@ -80,14 +80,11 @@ public class PlayMusicService extends Service implements Playable {
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
         try {
             mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    if (pos >= (mList.size() - 1)) {
-                        mediaPlayer.stop();
-                    } else {
-                        onMusicNext();
-                    }
+            mediaPlayer.setOnCompletionListener(mediaPlayer -> {
+                if (pos >= (mList.size() - 1)) {
+                    mediaPlayer.stop();
+                } else {
+                    onMusicNext();
                 }
             });
             CreateNotification.createNotification(this, R.drawable.ic_pause, pos, mList);
@@ -101,6 +98,11 @@ public class PlayMusicService extends Service implements Playable {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        if (SessionManager.getInstance().getKeyUpdateVolume()) {//true
+            mediaPlayer.setVolume(0, 0);
+        } else {
+            mediaPlayer.setVolume(1, 1);
+        }
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -197,12 +199,13 @@ public class PlayMusicService extends Service implements Playable {
             onMusicPause();
         }
     }
+
     @Subscribe
-    public void updateVolum(UpdateVolum updateMediaPlay){
-        if (SessionManager.getInstance().getKeyUpdateVolume()){//true
-            mediaPlayer.setVolume(0,0);
-        }else {
-            mediaPlayer.setVolume(1,1);
+    public void updateVolum(UpdateVolum updateMediaPlay) {
+        if (SessionManager.getInstance().getKeyUpdateVolume()) {//true
+            mediaPlayer.setVolume(0, 0);
+        } else {
+            mediaPlayer.setVolume(1, 1);
         }
     }
 

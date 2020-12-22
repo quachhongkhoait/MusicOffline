@@ -34,6 +34,7 @@ import com.cj.musicoffline.ui.fragment.library.dialog.ShowBottomSheetDialog;
 import com.cj.musicoffline.ui.playmusic.PlayActivity;
 import com.cj.musicoffline.utils.CheckService;
 import com.cj.musicoffline.utils.Constain;
+import com.cj.musicoffline.utils.PlayMusic;
 import com.cj.musicoffline.viewmodel.ShareViewModel;
 import com.google.gson.Gson;
 
@@ -77,22 +78,7 @@ public class FavouriteFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new AdapterFavourite(getActivity(), arrayList, mListID, FavouriteFragment.this, position -> {
-            Gson gson = new Gson();
-            String json = gson.toJson(arrayList);
-            //start activity
-            Intent mIntent = new Intent(getActivity(), PlayActivity.class);
-            mIntent.putExtra("postion", position);
-            mIntent.putExtra("list", json);
-            startActivity(mIntent);
-            //start service
-            if (!CheckService.isMyServiceRunning(getActivity(), PlayMusicService.class)) {
-                Intent intent = new Intent(getActivity(), PlayMusicService.class);
-                intent.putExtra("list", json);
-                intent.putExtra("postion", position);
-                ContextCompat.startForegroundService(getActivity(), intent);
-            } else {
-                EventBus.getDefault().post(new PlayAudio(position));
-            }
+            PlayMusic.StartMusic(arrayList, getActivity(), position);
         });
         mRecyclerView.setAdapter(adapter);
         //bottomsheet

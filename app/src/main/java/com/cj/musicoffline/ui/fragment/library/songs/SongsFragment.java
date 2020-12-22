@@ -55,7 +55,7 @@ import java.util.function.Consumer;
 
 public class SongsFragment extends Fragment {
     private ShareViewModel mViewModel;
-    private List<AudioModel> arrayList = new ArrayList<>();
+    private final List<AudioModel> arrayList = new ArrayList<>();
     AdapterAudio adapter;
     RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;

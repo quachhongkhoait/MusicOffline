@@ -212,7 +212,6 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Thiết lập tắt", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.mIVBack:
-                Toast.makeText(this, "Back nè", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }

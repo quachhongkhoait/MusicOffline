@@ -19,7 +19,7 @@ public interface PlayListDao {
 //    @Query("SELECT * FROM playlist")
 //    LiveData<List<PlayListModel>> getAllPlayList();
 
-    @Query("SELECT * FROM playlist WHERE id > 1")
+    @Query("SELECT * FROM playlist WHERE id != 1")
     LiveData<List<PlayListModel>> getPlayList();
 
     @Query("SELECT id FROM playlist WHERE nameList = :m")

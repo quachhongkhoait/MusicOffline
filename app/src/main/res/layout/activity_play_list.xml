@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.playlist.PlayListActivity">
+    tools:context=".ui.playlist.PlayListDetailActivity">
 
     <RelativeLayout
         android:id="@+id/mRltBack"
@@ -13,6 +13,7 @@
         android:layout_height="?actionBarSize">
 
         <TextView
+            android:id="@+id/mTVNameList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -21,6 +22,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/mIVBack"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingStart="@dimen/_10sdp"
@@ -29,7 +31,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mReCyclerView"
+        android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/mRltBack" />

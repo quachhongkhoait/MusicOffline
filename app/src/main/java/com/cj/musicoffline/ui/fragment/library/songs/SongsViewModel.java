@@ -12,12 +12,12 @@ import com.cj.musicoffline.room.MusicRepository;
 import java.util.List;
 
 public class SongsViewModel extends AndroidViewModel {
-    private MusicRepository mRepository;
-    private LiveData<List<AudioModel>> mAllMusic;
+    private final MusicRepository mRepository;
+    private final LiveData<List<AudioModel>> mAllMusic;
 
     public SongsViewModel(@NonNull Application application) {
         super(application);
-        mRepository =new MusicRepository(application);
+        mRepository = new MusicRepository(application);
         mAllMusic = mRepository.getAllMusic();
     }
 
@@ -26,6 +26,6 @@ public class SongsViewModel extends AndroidViewModel {
     }
 
     public void insert(AudioModel word) {
-            mRepository.insert(word);
+        mRepository.insert(word);
     }
 }

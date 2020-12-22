@@ -1,5 +1,6 @@
 package com.cj.musicoffline.ui.fragment.library.playlist;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +27,12 @@ import android.widget.Toast;
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.app.App;
 import com.cj.musicoffline.eventbuss.BackFragment;
+import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.model.FavouriteModel;
 import com.cj.musicoffline.model.PlayListModel;
 import com.cj.musicoffline.ui.fragment.library.dialog.CustomDialog;
+import com.cj.musicoffline.ui.playlist.PlayListDetailActivity;
+import com.cj.musicoffline.utils.Constain;
 import com.cj.musicoffline.utils.SessionManager;
 import com.cj.musicoffline.viewmodel.ShareViewModel;
 
@@ -50,7 +55,7 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
     private RecyclerView.LayoutManager mLayoutManager;
     public static boolean isInsert = false;
     private ShareViewModel mViewModel;
-    private int cout;
+    private String url;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +70,9 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         setUp(view);
         getPlayList();
+        if (getArguments() != null) {
+            url = getArguments().getString("url");
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -115,10 +123,17 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
                 if (isInsert) {
                     Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                     isInsert = false;
+                    if (!url.equals("")) {
+                        mViewModel.insertFavourite(new FavouriteModel(0, url, id));
+                    }
                     EventBus.getDefault().post(new BackFragment());
-                    mViewModel.insertFavourite(new FavouriteModel(0, "content://media/external/audio/media/31318", id));
                     Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 } else {
+                    Intent intent = new Intent(getActivity(), PlayListDetailActivity.class);
+                    intent.putExtra(Constain.NAME_LIST, (Parcelable) arrayList.get(pos));
+//                    intent.putExtra(Constain.NAME_LIST, arrayList.get(pos).getId());
+//                    intent.putExtra(Constain.NAME_LIST, arrayList.get(pos).getCount());
+                    startActivity(intent);
                     Toast.makeText(getActivity(), "open", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -126,6 +141,7 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClickDelete(int pos, int id) {
                 mViewModel.deletePlayList(id);
+                mViewModel.deletePlayListByIDPL(id);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

@@ -23,6 +23,7 @@ public class PlayMusic {
         Intent mIntent = new Intent(context, PlayActivity.class);
         mIntent.putExtra("postion", position);
         mIntent.putExtra("list", json);
+        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(mIntent);
         //start service
         if (!CheckService.isMyServiceRunning(context, PlayMusicService.class)) {

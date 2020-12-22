@@ -96,7 +96,11 @@ public class ShowBottomSheetDialog extends BottomSheetDialogFragment implements 
                 updateFavourite();
                 break;
             case R.id.tvAddSong:
-                EventBus.getDefault().post(new ChangeFragment(new PlayListFragment()));
+                PlayListFragment playListFragment = new PlayListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("url", audioModel.getUrl());
+                playListFragment.setArguments(bundle);
+                EventBus.getDefault().post(new ChangeFragment(playListFragment));
                 PlayListFragment.isInsert = true;
                 break;
             case R.id.tvAddDeleteSong:

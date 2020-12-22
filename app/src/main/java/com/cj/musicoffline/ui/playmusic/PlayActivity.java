@@ -2,6 +2,7 @@ package com.cj.musicoffline.ui.playmusic;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
@@ -15,7 +16,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +33,10 @@ import com.cj.musicoffline.eventbuss.SendUI;
 import com.cj.musicoffline.eventbuss.UpdateSeekBar;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.service.PlayMusicService;
+import com.cj.musicoffline.ui.fragment.library.dialog.TimeOffDialog;
 import com.cj.musicoffline.ui.playmusic.fragment.InfoFragment;
 import com.cj.musicoffline.ui.playmusic.fragment.LyricsFragment;
+import com.cj.musicoffline.utils.Constain;
 import com.cj.musicoffline.utils.HandlingMusic;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -72,6 +78,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         onClick();
         addData(PlayMusicService.mediaPlayer);
     }
+
 
     private void onClick() {
         mTVPrevious.setOnClickListener(this);
@@ -210,6 +217,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.mIVAlarm:
                 Toast.makeText(this, "Thiết lập tắt", Toast.LENGTH_SHORT).show();
+                TimeOffDialog timeOffDialog = new TimeOffDialog();
+//                timeOffDialog.setCancelable(false);
+                timeOffDialog.show(getSupportFragmentManager(), Constain.keyDialogAlarm);
                 break;
             case R.id.mIVBack:
                 finish();

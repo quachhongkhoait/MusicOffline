@@ -13,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cj.musicoffline.R;
 import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.UpdateVolum;
+import com.cj.musicoffline.model.FavouriteModel;
+import com.cj.musicoffline.room.FavouriteRepository;
 import com.cj.musicoffline.utils.HandlingMusic;
 import com.cj.musicoffline.utils.SessionManager;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -28,7 +31,8 @@ import org.greenrobot.eventbus.ThreadMode;
 public class InfoFragment extends Fragment {
     private TextView mTvTitle;
     private RoundedImageView mImgAlbum;
-    private ImageView mIVVolume, mIVRepeat;
+    private ImageView mIVVolume, mIVRepeat, mIVAddLove;
+    String url;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,8 +53,9 @@ public class InfoFragment extends Fragment {
         if (getArguments() != null) {
             String title = getArguments().getString("title");
             String image = getArguments().getString("image");
+            url = getArguments().getString("url");
             if (!title.equals("")) {
-                updateInfo(new SendInfo(title, image));
+                updateInfo(new SendInfo(title, image, url));
             }
         }
         updateUIVolume();
@@ -61,6 +66,7 @@ public class InfoFragment extends Fragment {
         mImgAlbum = view.findViewById(R.id.mImgAlbum);
         mIVRepeat = view.findViewById(R.id.mIVRepeat);
         mIVVolume = view.findViewById(R.id.mIVVolume);
+        mIVAddLove = view.findViewById(R.id.mIVAddLove);
 
         mIVRepeat.setOnClickListener(v -> {
 
@@ -77,6 +83,13 @@ public class InfoFragment extends Fragment {
             EventBus.getDefault().post(new UpdateVolum(set));
             updateUIVolume();
         });
+
+        mIVAddLove.setOnClickListener(v -> {
+            Toast.makeText(getActivity(), "Thêm yêu thích thành công", Toast.LENGTH_SHORT).show();
+            FavouriteRepository favouriteRepository = new FavouriteRepository(getActivity());
+            favouriteRepository.insertFavourite(new FavouriteModel(0, url, 1));
+            Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void updateUIVolume() {
@@ -89,6 +102,7 @@ public class InfoFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateInfo(SendInfo sendInfo) {
+        url = sendInfo.getUrl();
         if (sendInfo != null) {
             mTvTitle.setText(sendInfo.getTitle());
             Bitmap bitmap = BitmapFactory.decodeFile(HandlingMusic.getCoverArtPath(Long.parseLong(sendInfo.getImage()), getContext()));

@@ -31,23 +31,33 @@
         app:riv_corner_radius="@dimen/_30sdp" />
 
     <ImageView
-        android:layout_marginStart="@dimen/_20sdp"
         android:id="@+id/mIVVolume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_20sdp"
         android:padding="@dimen/_15sdp"
         android:src="@drawable/ic_volume_up" />
 
     <ImageView
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="@dimen/_20sdp"
         android:id="@+id/mIVRepeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:padding="@dimen/_15sdp"
         android:src="@drawable/ic_repeat_off" />
+
+    <ImageView
+        android:id="@+id/mIVAddLove"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_above="@id/mIVRepeat"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_35sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:src="@drawable/ic_love_ok" />
 
 </RelativeLayout>

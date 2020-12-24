@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.library.album.AlbumFragment"
-        android:background="@drawable/background">
+    android:background="@drawable/background"
+    tools:context=".ui.fragment.library.album.AlbumFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/linnertoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/linnertoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="match_parent"
+                android:background="#00000000">
 
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="59dp">
-                <androidx.appcompat.widget.Toolbar
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#00000000">
+                <ImageView
+                    android:id="@+id/mIVBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_back" />
 
-                    <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_back"/>
-                    <TextView
-                            android:textSize="24sp"
-                            android:textColor="#FFFFFF"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Album"/>
-                </androidx.appcompat.widget.Toolbar>
-            </LinearLayout>
-            <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#807B7B"/>
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Album"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
+            </androidx.appcompat.widget.Toolbar>
         </LinearLayout>
-    </RelativeLayout>
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#807B7B" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linnertoolbar" />
+</RelativeLayout>

@@ -57,11 +57,11 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mIVBack, mIVAlarm;
     private TextView mTVPrevious, mTVPause, mTVNext, mTVTotalTime, mTVCurrentTime;
     private SeekBar mSeekBar;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private Runnable mRunnable;
     public static int position;
     public static boolean isPlayingUI = true;
-    private volatile boolean mIsStopped = true;
+    private final boolean mIsStopped = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +109,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         Bundle bundleIF = new Bundle();
         bundleIF.putString("title", title);
         bundleIF.putString("image", image);
+        bundleIF.putString("url", mList.get(position).getUrl());
         InfoFragment infoFragment = new InfoFragment();
         infoFragment.setArguments(bundleIF);
 //        EventBus.getDefault().post(new SendLyrics(mList.get(position).getLyrics(), mList.get(position).getPathLyrics()));
@@ -235,10 +236,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("nnn", "sendService: " + position);
             if (action.equals("previous")) {
                 position -= 1;
-                EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
+                EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum(), mList.get(position).getUrl()));
             } else if (action.equals("next")) {
                 position += 1;
-                EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
+                EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum(), mList.get(position).getUrl()));
             } else if (action.equals("play")) {
                 updateUI(new SendUI(0, "play"));
             } else {

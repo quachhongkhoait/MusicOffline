@@ -12,11 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cj.musicoffline.R;
-import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.SendLyrics;
 
 import org.greenrobot.eventbus.EventBus;

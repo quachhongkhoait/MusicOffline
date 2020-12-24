@@ -21,6 +21,7 @@ import com.cj.musicoffline.eventbuss.SendInfo;
 import com.cj.musicoffline.eventbuss.SendLyrics;
 import com.cj.musicoffline.eventbuss.SendService;
 import com.cj.musicoffline.eventbuss.SendUI;
+import com.cj.musicoffline.eventbuss.StopService;
 import com.cj.musicoffline.eventbuss.UpdateVolum;
 import com.cj.musicoffline.eventbuss.UpdateSeekBar;
 import com.cj.musicoffline.itf.Playable;
@@ -156,7 +157,7 @@ public class PlayMusicService extends Service implements Playable {
         startForeground(1, CreateNotification.notification);
         playAudio(position);
         EventBus.getDefault().post(new SendUI(position, "play"));
-        EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
+        EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum(), mList.get(position).getUrl()));
         EventBus.getDefault().post(new UpdateSeekBar(mediaPlayer));
         EventBus.getDefault().post(new SendLyrics(mList.get(position).getLyrics(), mList.get(position).getPathLyrics()));
     }
@@ -193,7 +194,7 @@ public class PlayMusicService extends Service implements Playable {
         startForeground(1, CreateNotification.notification);
         playAudio(position);
         EventBus.getDefault().post(new SendUI(position, "play"));
-        EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum()));
+        EventBus.getDefault().post(new SendInfo(mList.get(position).getTitle(), mList.get(position).getIdAlbum(), mList.get(position).getUrl()));
         EventBus.getDefault().post(new UpdateSeekBar(mediaPlayer));
         EventBus.getDefault().post(new SendLyrics(mList.get(position).getLyrics(), mList.get(position).getPathLyrics()));
     }
@@ -214,9 +215,9 @@ public class PlayMusicService extends Service implements Playable {
     @Subscribe
     public void updateVolum(UpdateVolum updateMediaPlay) {
         if (SessionManager.getInstance().getKeyUpdateVolume()) {//true
-            mediaPlayer.setVolume(0, 0);
-        } else {
             mediaPlayer.setVolume(1, 1);
+        } else {
+            mediaPlayer.setVolume(0, 0);
         }
     }
 
@@ -231,5 +232,10 @@ public class PlayMusicService extends Service implements Playable {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         unregisterReceiver(broadcastReceiver);
+    }
+
+    @Subscribe
+    public void stopService(StopService stopService){
+        stopSelf();
     }
 }

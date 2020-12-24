@@ -34,6 +34,9 @@ public interface MusicDao {
     @Query("SELECT * FROM audio ORDER BY url DESC LIMIT 5")
     LiveData<List<AudioModel>> getNew();
 
-    @Query("SELECT * FROM audio WHERE idAlbum")
+    @Query("select * from audio group by idAlbum")
     LiveData<List<AudioModel>> getAlbum();
+
+    @Query("select * from audio where idAlbum = :idAlbum")
+    LiveData<List<AudioModel>> getAlbumDetail(int idAlbum);
 }

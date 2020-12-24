@@ -71,4 +71,12 @@ public class MusicRepository {
             mSearchDao.deleteSearch(url);
         });
     }
+
+    public LiveData<List<AudioModel>> getAlbum() {
+        return mMusicDao.getAlbum();
+    }
+
+    public LiveData<List<AudioModel>> getAlbumDetail(int idAlbum) {
+        return mMusicDao.getAlbumDetail(idAlbum);
+    }
 }

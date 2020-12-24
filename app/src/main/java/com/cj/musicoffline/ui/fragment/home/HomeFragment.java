@@ -31,6 +31,9 @@ import com.cj.musicoffline.broadcast.NotificationActionService;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.model.PlayListModel;
 import com.cj.musicoffline.room.MusicDatabase;
+import com.cj.musicoffline.ui.playlist.PlayListDetailActivity;
+import com.cj.musicoffline.utils.Constain;
+import com.cj.musicoffline.utils.PlayMusic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,11 +104,8 @@ public class HomeFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new AdapterNew(getContext(), arrayList, new AdapterNew.OnClickItemMusicListener() {
-            @Override
-            public void onclickItem(int position) {
-
-            }
+        adapter = new AdapterNew(getContext(), arrayList, position -> {
+            PlayMusic.StartMusic(arrayList, getActivity(), position);
         });
         mRecyclerView.setAdapter(adapter);
 
@@ -115,7 +115,9 @@ public class HomeFragment extends Fragment {
         adapterPL = new AdapterPL(getContext(), arrayListPL, new AdapterPL.OnClickItemMusicListener() {
             @Override
             public void onClickOpen(int pos, int id) {
-
+                Intent intent = new Intent(getActivity(), PlayListDetailActivity.class);
+                intent.putExtra(Constain.NAME_LIST, arrayListPL.get(pos));
+                startActivity(intent);
             }
 
             @Override

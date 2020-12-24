@@ -127,14 +127,12 @@ public class PlayListFragment extends Fragment implements View.OnClickListener {
                         mViewModel.insertFavourite(new FavouriteModel(0, url, id));
                     }
                     EventBus.getDefault().post(new BackFragment());
-                    Toast.makeText(getActivity(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getActivity(), PlayListDetailActivity.class);
-                    intent.putExtra(Constain.NAME_LIST, (Parcelable) arrayList.get(pos));
+                    intent.putExtra(Constain.NAME_LIST, arrayList.get(pos));
 //                    intent.putExtra(Constain.NAME_LIST, arrayList.get(pos).getId());
 //                    intent.putExtra(Constain.NAME_LIST, arrayList.get(pos).getCount());
                     startActivity(intent);
-                    Toast.makeText(getActivity(), "open", Toast.LENGTH_SHORT).show();
                 }
             }
 

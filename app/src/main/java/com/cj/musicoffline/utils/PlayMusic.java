@@ -6,6 +6,7 @@ import android.content.Intent;
 import androidx.core.content.ContextCompat;
 
 import com.cj.musicoffline.eventbuss.PlayAudio;
+import com.cj.musicoffline.eventbuss.StopService;
 import com.cj.musicoffline.model.AudioModel;
 import com.cj.musicoffline.service.PlayMusicService;
 import com.cj.musicoffline.ui.playmusic.PlayActivity;
@@ -17,6 +18,8 @@ import java.util.List;
 
 public class PlayMusic {
     public static void StartMusic(List<AudioModel> arrayList, Context context, int position) {
+        SessionManager.getInstance().setKeyUpdateVolume(true);
+        EventBus.getDefault().post(new StopService());
         PlayMusicService.rd = false;
         Gson gson = new Gson();
         String json = gson.toJson(arrayList);

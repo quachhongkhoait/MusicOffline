@@ -37,6 +37,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PlayMusicService extends Service implements Playable {
     private List<AudioModel> mList = new ArrayList();
@@ -44,6 +45,7 @@ public class PlayMusicService extends Service implements Playable {
     public static MediaPlayer mediaPlayer;
     public static boolean isPlaying = true;
     public static int position;
+    public static boolean rd = false;
 
     @Nullable
     @Override
@@ -73,6 +75,11 @@ public class PlayMusicService extends Service implements Playable {
 
     private void playAudio(int pos) {
         position = pos;
+        Random random = new Random();
+        if (rd) {
+            position = random.nextInt(mList.size() - 1) + 1;
+        }
+
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
@@ -128,6 +135,8 @@ public class PlayMusicService extends Service implements Playable {
                     break;
                 case "ACTION_CLOSE":
                     EventBus.getDefault().post(new SendUI(0, "close"));
+                    SessionManager.getInstance().setKeyTimeOff(0);
+                    SessionManager.getInstance().setKeyAlarmManagerment("");
                     stopSelf();
                     mediaPlayer.stop();
                     break;

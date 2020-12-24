@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -45,14 +46,15 @@ import java.util.List;
 
 public class FavouriteFragment extends Fragment {
     private ShareViewModel mModel;
-    private List<AudioModel> arrayList = new ArrayList<>();
-    private List<FavouriteModel> mListID = new ArrayList<>();
+    private final List<AudioModel> arrayList = new ArrayList<>();
+    private final List<FavouriteModel> mListID = new ArrayList<>();
     AdapterFavourite adapter;
     RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ShowBottomSheetDialog showBottomSheetDialog;
     private TextView mTVNullSongs;
     private ImageView mIVBack;
+    private CardView mRandom;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +74,7 @@ public class FavouriteFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.mReCyclerView);
         mIVBack = view.findViewById(R.id.mIVBack);
         mTVNullSongs = view.findViewById(R.id.mTVNullSongs);
+        mRandom = view.findViewById(R.id.btn_Favourite);
         mTVNullSongs.setVisibility(View.GONE);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -86,6 +89,11 @@ public class FavouriteFragment extends Fragment {
 
         mIVBack.setOnClickListener(v -> {
             EventBus.getDefault().post(new BackFragment());
+        });
+
+        mRandom.setOnClickListener(v -> {
+            PlayMusic.StartMusic(arrayList, getActivity(), 0);
+            PlayMusicService.rd = true;
         });
     }
 

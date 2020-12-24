@@ -30,4 +30,10 @@ public interface MusicDao {
 
     @Query("SELECT * FROM audio WHERE url = :m")
     LiveData<AudioModel> getByID(String m);
+
+    @Query("SELECT * FROM audio ORDER BY url DESC LIMIT 5")
+    LiveData<List<AudioModel>> getNew();
+
+    @Query("SELECT * FROM audio WHERE idAlbum")
+    LiveData<List<AudioModel>> getAlbum();
 }

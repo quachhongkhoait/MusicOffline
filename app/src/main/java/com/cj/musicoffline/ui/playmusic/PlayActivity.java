@@ -202,6 +202,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.mTVPrevious:
                 action = "previous";
                 changStart("play");
+                sendService(action);
                 break;
             case R.id.mTVPause:
                 isPlayingUI = PlayMusicService.isPlaying;
@@ -210,13 +211,14 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     action = "play";
                 }
+                sendService(action);
                 break;
             case R.id.mTVNext:
                 action = "next";
                 changStart("play");
+                sendService(action);
                 break;
             case R.id.mIVAlarm:
-                Toast.makeText(this, "Thiết lập tắt", Toast.LENGTH_SHORT).show();
                 TimeOffDialog timeOffDialog = new TimeOffDialog();
 //                timeOffDialog.setCancelable(false);
                 timeOffDialog.show(getSupportFragmentManager(), Constain.keyDialogAlarm);
@@ -225,7 +227,6 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
         }
-        sendService(action);
     }
 
     private void sendService(String action) {

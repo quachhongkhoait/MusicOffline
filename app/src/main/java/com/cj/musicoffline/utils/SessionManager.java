@@ -3,6 +3,8 @@ package com.cj.musicoffline.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Date;
+
 public class SessionManager {
     private static final String SHARED_PREFERENCES_NAME = "PREFERENCE_FILE_KEY";
     private static final String KEY_INSERT_FAVOURITE = "key_insert_favourite";
@@ -13,6 +15,8 @@ public class SessionManager {
     private static final String KEY_ROLE = "key_role";
     private static final String KEY_UPDATE_PLAYLIST = "key_update_playlist";
     private static final String KEY_UPDATE_VOLUME = "key_update_volum";
+    private static final String KEY_ALARM_MANAGERMENT = "key_alarm_managerment";
+    private static final String KEY_TIME_OFF = "key_time_off";
 
 
     private static SessionManager sInstance;
@@ -32,6 +36,24 @@ public class SessionManager {
 
     public void init(Context context) {
         sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
+    //change AlarmManagerment
+    public void setKeyAlarmManagerment(String s) {
+        sharedPref.edit().putString(KEY_ALARM_MANAGERMENT, s).apply();
+    }
+
+    public String getKeyAlarmManagerment() {
+        return sharedPref.getString(KEY_ALARM_MANAGERMENT, "");
+    }
+
+    //change AlarmManagerment
+    public void setKeyTimeOff(int s) {
+        sharedPref.edit().putInt(KEY_TIME_OFF, s).apply();
+    }
+
+    public int getKeyTimeOfft() {
+        return sharedPref.getInt(KEY_TIME_OFF, 0);
     }
 
     //change volume

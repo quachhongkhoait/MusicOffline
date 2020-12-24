@@ -31,6 +31,10 @@ public class MusicRepository {
         return mAllMusic;
     }
 
+    public LiveData<List<AudioModel>> getMusicNew() {
+        return mMusicDao.getNew();
+    }
+
     public void insert(AudioModel word) {
         MusicDatabase.databaseWriteExecutor.execute(() -> {
             mMusicDao.insert(word);

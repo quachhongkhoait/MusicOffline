@@ -1,0 +1,7 @@
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/curve_time_off"
+    android:insetLeft="20dip"
+    android:insetTop="10dip"
+    android:insetRight="20dip"
+    android:insetBottom="10dip"
+    android:visible="true" />

@@ -17,6 +17,7 @@ import java.util.List;
 
 public class PlayMusic {
     public static void StartMusic(List<AudioModel> arrayList, Context context, int position) {
+        PlayMusicService.rd = false;
         Gson gson = new Gson();
         String json = gson.toJson(arrayList);
         //start activity
